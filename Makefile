@@ -3,6 +3,7 @@ REPORTER = dot
 test:
 	@NODE_ENV=test ./node_modules/.bin/mocha \
     --reporter $(REPORTER) \
-    test/*.js
+    test/bootstrap.test.js \
+    test/unit/*.js
 
 .PHONY: test

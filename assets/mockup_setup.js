@@ -1,8 +1,9 @@
 
 $( document ).ready(function() {
 
+
 	//  Find all the displayable <divs>
-	var allDisplays = $('.rbac-display');
+	var allDisplays = $('.mockup-display');
 
 
 	var showIt = function( whichOne ) {
@@ -19,8 +20,10 @@ $( document ).ready(function() {
 
 	}
 
+
+
 	// for each element that has a rbac-show="displayableDiv" attribute
-	$('[rbac-show]').each(function(indx, el){
+	$('[mockup-show]').each(function(indx, el){
 
 		// when it is clicked, then make sure only that div is shown
 		var $el = $(el);
@@ -29,23 +32,19 @@ $( document ).ready(function() {
 		})
 	})
 
-});
-
- //Active InActive of Links
-$(document).ready(function () {
-    
-    $("ul.art-hmenu>li").on("click", "a", function (event) {
-        $("#menu_wrapper .activelink").removeClass("activelink");
-        $(this).addClass("activelink");
-    });
 
 
+	// display any tooltips().
+	$('[data-toggle="tooltip"]').tooltip();
+
+
+	// enable the menu sidr:
+	$('#op-masthead-menu a:first-of-type').sidr({name:'op-menu-widget',side:'left'});
 
 });
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+
+
 
 
 
