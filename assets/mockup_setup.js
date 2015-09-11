@@ -22,13 +22,13 @@ $( document ).ready(function() {
 
 
 
-	// for each element that has a rbac-show="displayableDiv" attribute
+	// for each element that has a mockup-show="displayableDiv" attribute
 	$('[mockup-show]').each(function(indx, el){
 
 		// when it is clicked, then make sure only that div is shown
 		var $el = $(el);
 		$el.click(function(){
-			showIt($el.attr('rbac-show'));
+			showIt($el.attr('mockup-show'));
 		})
 	})
 

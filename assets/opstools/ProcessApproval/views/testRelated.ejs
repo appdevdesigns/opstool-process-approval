@@ -1,0 +1,32 @@
+                    <div class="op-widget-masthead">
+                      <h3>Submitted By:</h3>
+                    </div>
+                    <!--Avatar & Team-->
+                    <div class="row op-container">
+                      <div class="col-xs-6 col-sm-3 col-lg-6 nopadR">
+                            <img class="op-avatar" src="<%= user.avatar %>" alt="Responsive image" >
+                        </div>
+                        <div class="col-xs-6 col-sm-9 col-lg-6 nopadR">
+                             <h3 class="nomargintop"><%= user.displayName %></h2>
+                             <p><strong>Team(s):</strong></p>
+                             <ul class="op-list">
+                                <% user.teams.forEach(function(id){ %>
+
+                                  <li><%= teams[id].team_name %></li>
+
+                                <% }) %>
+                            </ul>
+                        </div>                        
+                    </div>
+                    <!--/Avatar & Team-->
+                    <div class="op-container">
+                      <h5 class="op-margin-bottom">Created On: 12 Dec 2015</h5>
+                        <div class="op-container off-botm20">
+                            <label class="lbl-title">Under Team:</label>
+                            <p><span><strong><%= teams[teamID].team_name %></strong></span><br><%= teams[teamID].team_description %></p>
+                        </div>
+                        <div class="op-container">
+                            <label class="lbl-title">Under Project:</label>
+                            <p><span><strong>Project Name</strong></span><br>project description can be longer than you might think here.</p>
+                        </div>                        
+                    </div>

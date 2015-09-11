@@ -1,9 +1,9 @@
 var path = require('path');
 var AD = require('ad-utils');
 
+var Barrels = require('barrels');
 
-var Sails = require('sails'),
-    sails,
+var sails,
     cwd;
 
 //
@@ -16,13 +16,18 @@ before(function(done) {
   // Increase the Mocha timeout so that Sails has enough time to lift.
   this.timeout(40000);
 
-  // sails should lift from above:
-  cwd = process.cwd();
 
+  // sails should lift from directory above:
+  cwd = process.cwd();
   process.chdir(path.join('..','..'));
 
 
-  AD.test.sails.load()
+  AD.test.sails.load({
+    models:{
+      connection:'test',
+      migrate:'drop'
+    }
+  })
   .fail(function(err){
       done(err);
   })
@@ -30,12 +35,15 @@ before(function(done) {
 
     sails = server;
 
-    //
-    // here you can load fixtures, etc.
-    //
+      // Load fixtures
+      var barrels = new Barrels(path.join(__dirname, 'fixtures'));
+
+      // Populate the DB
+      barrels.populate(function(err) {
+        done(err);
+      });
 
 
-    done();
   });
 });
 
