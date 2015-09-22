@@ -1,0 +1,9 @@
+[
+  {
+    "guid": "test",
+    "username": "test",
+    "password": "test",
+    "isActive": 1,
+    "languageCode" : "en"
+  }
+]

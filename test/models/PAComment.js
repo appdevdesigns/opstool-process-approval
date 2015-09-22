@@ -9,4 +9,15 @@ describe('PAComment', function() {
 
     });
 
+
+    it('should load the PAComment fixtures', function(done){
+
+        PAComment.find()
+        .exec(function(err, list){
+            assert.isAbove(list.length, 0, ' --> should be more than 0 entries.');
+            done();
+        });
+
+    });
+
 });

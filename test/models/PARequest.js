@@ -10,7 +10,7 @@ describe('PARequest', function() {
     });
 
 
-    it('should load the fixtures', function(done){
+    it('should load the PARequest fixtures', function(done){
 
         PARequest.find()
         .exec(function(err, list){
