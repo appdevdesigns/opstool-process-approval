@@ -30,7 +30,7 @@
 <body>
 <!--TOP MENU-->  
 <div style="" class="op-portal-popup">
-  <div class="">
+  <div class="container">
 
       <!-- Masthead -->  
       <div class="op-container op-masthead">
@@ -74,26 +74,282 @@
 
             <div class="opsportal-area-ProcessApproval" style="display: block;">
                 <div class="opsportal-area-tool-ProcessApproval">
-                  <div class="row op-container op-stage-container" id="">
+                  <div class="op-container op-stage-container" id="">
 
 
   <!-- HTML Mockup Here -->
 
 
-                      <!-- if your design uses a masthead on the stage, use this: -->
-                      <!-- if not ... delete this! -->
-                      <div class="op-container op-stage-masthead">
-                        <h2>Did ya need a masthead? </h2>
-                      </div>
+	<!--Left bar-->
+	<div  class="op-container op-widget sticky" id="left-menu">
+        <div class="op-widget-masthead">
+            <h3><strong>Pending Transactions</strong></h3>
+            <p>Choose one of the pending transactions to review</p>
+        </div>        
+        <div class="op-widget-body">
+          <ul class="op-list">
+              <li mockup-show="new-activity" class="op-container">
+                <i class="fa fa-calendar"></i>
+                <div><strong>New Activity</strong><br>
+                          "Current Activity Name"
+                          by "person submitted by"
+                          date: 10 August 1990
+                </div>
+              </li>
+              <li mockup-show="new-activity" class="op-container">
+                <i class="fa fa-calendar"></i>
+                <div><strong>New Activity</strong><br>
+                          "Current Activity Name"
+                          by "person submitted by"
+                          date: 10 August 1990
+                </div>
+              </li>
+              <li mockup-show="new-image" class="op-container">
+                <i class="fa fa-photo"></i>
+                <div><strong>New Image</strong><br>
+                          "Current Activity Name"
+                          by "person submitted by"
+                          date: 10 August 1990
+                </div>
+              </li>
+          </ul>
+        </div>
 
-                      <div class="op-stage-body">
+		<div class="op-widget-footer">
+			<a class="op-toggle" href="#" title="appDev Designs"><img src="../../images/appdev_logo_white.png" style="width: 70px; height: auto;" /></a>
+		</div>
+	</div>
+	<!--/Left bar-->
+    
+	<!--Form Activity Area-->
+	<div id="apprv-activity" class="mockup-display new-activity">
+        <div class="op-container">
+            <div class="workspace col-lg-9 op-margin-bottom">
+            	<div class="op-widget-masthead">
+            		<h3>New Activity</h3>
+                </div> 
+                <div class="op-container op-block-border">
+                
+                	 <!--Activity Name-->
+                     <div id="opsportal-activityName" class="op-margin-bottom">
+                         <div class="form-group">
+                            <label class="lbl-title">Activity Name<br><span>Please use a name everyone associated with the activity will organize</span></label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Activity Name">
+                         </div>
+                         <!--/Activity Name-->
+                         
+                         <!--Date-->
+                         <div class="form-inline">
+                          <div class="form-group">
+                            <label for="exampleInputName2">Start Date:</label>
+                            <input type="date" class="form-control" id="startDate" placeholder="">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail2">End Date:</label>
+                            <input type="date" class="form-control" id="Enddate" placeholder="">
+                          </div>
+                        </div>  
+                        <!--/Date--> 
+                    </div> 
+                    <!--/Activity Name-->
+                    
+                    <!--Objective-->
+                    <div id="objective"  class="op-container op-margin-bottom">
+                        <label class="lbl-title">Team Objectives<br><span>Every Activity must meet at least one objective. Please choose all that apply:</span></label>
+                        <div class="checkbox">
+                          <label><input type="checkbox" value="">Objective 1</label><br>
+                          <label><input type="checkbox" value="">Objective 2</label><br>
+                          <label><input type="checkbox" value="">Objective 3</label><br>
+                        </div>
+                    </div>                    
+                    <!--/Objective-->
+                    <div id="opsportal-description">
+                    	<label class="lbl-title">Description<br><span>Please describe this activity using the team objective as guideline:</span></label>
+                        <textarea class="form-control" rows="5"></textarea>
+                    </div>                
+                </div>
+                <div class="op-widget-masthead">
+                	<h3>Comments:</h3>
+                </div>
+                <div class="op-container op-block-border op-margin-bottom">
+                    <p>previous comment 1</p>
+                    <p>previous comment 2</p>
+                    <p>previous comment 3</p>
+                </div>
+				<textarea class="form-control" rows="5">Admin Comments</textarea>
+                <!--Action Buttons-->
+                <div class="op-container nobgcolor op-block op-margin-top">
+                    <button class="btn btn-success float-right" type="submit">Accept</button>
+                    <button class="btn btn-info  float-right offset-15" type="submit">Request</button>
+                    <button class="btn btn-warning float-right  offset-15" type="submit"><i class="fa fa-hand-paper-o"></i>Deny</button>
+                </div>    
+                <!--/Action Buttons-->                
+            </div>
+            <!--Submitted By Area-->
+            <div id="submittedby" class="col-lg-3">
+                <div class="op-container op-block-border">
+	                <div class="op-widget-masthead">
+    	                <h3>Submitted By:</h3>
+                    </div>
+                    <!--Avatar & Team-->
+                    <div class="row op-container">
+                    	<div class="col-xs-6 col-sm-3 col-lg-6 nopadR">
+                            <img class="op-avatar" src="images/opsportal/default-avatar.png" alt="Responsive image" >
+                        </div>
+                        <div class="col-xs-6 col-sm-9 col-lg-6 nopadR">
+                             <h3 class="nomargintop">Nick Fury</h2>
+                             <p><strong>Team(s):</strong></p>
+                             <ul class="op-list">
+                                <li>team a</li>
+                                <li>team b</li>
+                                <li>team c</li>
+                            </ul>
+                        </div>                        
+                    </div>
+                    <!--/Avatar & Team-->
+                    <div class="op-container">
+                    	<h5 class="op-margin-bottom">Created On: 12 Dec 2015</h5>
+                        <div class="op-container off-botm20">
+                            <label class="lbl-title">Under Team:</label>
+                            <p><span><strong>Team Name</strong></span><br>team description can be longer than you might think here.</p>
+                        </div>
+                        <div class="op-container">
+                            <label class="lbl-title">Under Project:</label>
+                            <p><span><strong>Project Name</strong></span><br>project description can be longer than you might think here.</p>
+                        </div>                        
+                    </div>
+                </div>       
+            </div>
+            <!--/Submitted By Area-->    
+        </div>    
+	</div>
+	<!--/Form Activity Area-->
+  <!--Image Area-->
+  <div id="apprv-image" class="mockup-display new-image opsportal-content-area" style="display:none">
+        <div class="op-container">
+            <div class="workspace col-lg-9 op-margin-bottom">
+				<div class="op-widget-masthead">
+					<h3>New Image</h3>
+				</div>			  
+                <div class="op-container op-block-border">
+                
+                   <!--Image Name-->
+                     <div id="opsportal-activityName" class="op-margin-bottom">
+                         <div class="form-group">
+                            <label class="lbl-title">Image</label>
+                            <div class="op-container off-botm20">
+                              <img class="img-responsive" src="images/opsportal/love-map.jpg" alt="R,desponsive image" >                              
+                            </div>
+                          </div>
+                          <div class="form-horizontal">
+                           <!--Caption--> 
+                           <div class="form-group">
+                              <label class="col-sm-1 nopadL control-label lbl-title">Caption:</label>
+                              <div class="col-sm-11">
+                                <input type="text" class="form-control" id="caption">
+                              </div>
+                           </div>
+                           <!--/Caption-->
+                           <!--Date-->
+                           <div class="row">
+                             <div class="col-sm-12">
+                                <label class="col-sm-1 control-label nopadL lbl-title">Date:</label>
+                                <div class="col-sm-11">
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <input type="date" class="col-xs-2 form-control" id="caption">
+                                    </div>
+                                  </div>
+                                </div>
+                             </div>
+                           </div>
+                           <!--/Date-->
+                         </div>
+                    </div> 
+                    <!--/Image Name-->
+                    <!--People in Photo-->                  
+                    <div id="opsportal-description">
+                      <label class="lbl-title">People in photo:</label>
+                        <div class="op-container op-block-border op-margin-bottom">
+                          <div class="row" style="margin:0;">
+                            <!--List of people with closed button-->
+                            <div class="alert people alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <strong>Person 1</strong>
+                            </div>
+                            <div class="alert people alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <strong>Person 2</strong>
+                            </div>
+                            <div class="alert people alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <strong>Person 3</strong>
+                            </div>
+                            <div class="alert people alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <strong>Person 4</strong>
+                            </div>                                                                                      
+                            <!--/End here-->
+                          </div>
+                        </div>
+                    </div>
+                    <!--/People in Photo-->                  
+                </div>
+                <div class="op-widget-masthead">
+                	<h3>Comments:</h3>
+                </div>
+                <div class="op-container op-block-border op-margin-bottom">
+                    <p>previous comment 1</p>
+                    <p>previous comment 2</p>
+                    <p>previous comment 3</p>
+                </div>
+        		<textarea class="form-control" rows="5">Admin Comments</textarea>
+                <!--Action Buttons-->
+                <div class="op-container nobgcolor op-block nomargintop">
+                    <button class="btn btn-success float-right" type="submit">Accept</button>
+                    <button class="btn btn-info  float-right offset-15" type="submit">Request</button>
+                    <button class="btn btn-warning float-right  offset-15" type="submit"><i class="fa fa-hand-paper-o"></i>Deny</button>
+                </div>    
+                <!--/Action Buttons-->                
+            </div>
+            <!--Submitted By Area-->
+            <div id="submittedby" class="col-lg-3">
+                <div class="op-container op-block-border">
+                	<div class="op-widget-masthead">
+                    	<h3>Submitted By:</h3>
+                    </div>
+                    <!--Avatar & Team-->
+                    <div class="row op-container">
+                      <div class="col-xs-6 col-sm-3 col-lg-6 nopadR">
+                            <img class="op-avatar" src="images/opsportal/default-avatar.png" alt="Responsive image" >
+                        </div>
+                        <div class="col-xs-6 col-sm-9 col-lg-6 nopadR">
+                             <h2 class="nomargintop">Nick Fury</h2>
+                             <p>Team(s):</p>
+                             <p>team a</p>
+                             <p>team b</p>
+                             <p>team c</p>
+                        </div>                        
+                    </div>
+                    <!--/Avatar & Team-->
+                    <div class="op-container">
+                      <h5 class="off-botm10">Created On: 12 Dec 2015</h5>
+                        <div class="op-container op-margin-bottom">
+                            <label class="lbl-title"><strong>Under Team:</strong></label>
+                            <p><span><strong>Team Name</strong></span><br>team description can be longer than you might think here.</p>
+                        </div>
+                        <div class="op-container">
+                            <label class="lbl-title"><strong>Under Project:</strong></label>
+                            <p><span><strong>Project Name</strong></span><br>project description can be longer than you might think here.</p>
+                        </div>                        
+                    </div>
+                </div>       
+            </div>
+            <!--/Submitted By Area-->    
+        </div>    
+  </div>
+  <!--/Image Area-->
 
-                          <!-- The rest of your design should fit inside this div.op-stage-body -->
-                          <h1> ProcessApproval Mockup </h1>
-                          <p> place all your HTML code here... </p>
-
-
-                      </div>
 
 
   <!-- End HTML Mockup -->

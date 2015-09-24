@@ -22,7 +22,7 @@ $( document ).ready(function() {
 
 
 
-	// for each element that has a mockup-show="displayableDiv" attribute
+	// for each element that has a rbac-show="displayableDiv" attribute
 	$('[mockup-show]').each(function(indx, el){
 
 		// when it is clicked, then make sure only that div is shown
@@ -31,7 +31,19 @@ $( document ).ready(function() {
 			showIt($el.attr('mockup-show'));
 		})
 	})
+	
+ //Active InActive of Links
+    
+    $('.op-list .op-container').click(function(e) {
 
+         //remove all pre-existing active classes
+        $('.selected').removeClass('selected');
+
+        //add the active class to the link we clicked
+        $(this).addClass('selected');
+
+         event.preventDefault();
+    });
 
 
 	// display any tooltips().
@@ -75,28 +87,28 @@ $( document ).ready(function() {
 
  //For Testing Display with lots of entries in our Tables:  
  // copy the last row x20 
-$(document).ready(function () {
-    
-    var allTables = $('table.table-hover');
-    allTables.each(function(i, table){
-    	var $table = $(table);
-    	var lastRow = $table.find('tr:last');
-    	var tBody = $table.find('tbody');
-    	for (var i=1; i<=20; i++) {
-    		tBody.append(lastRow.clone());
-    	} 
-    })
-	
-
-
-});
+//$(document).ready(function () {
+//    
+//    var allTables = $('table.table-hover');
+//    allTables.each(function(i, table){
+//    	var $table = $(table);
+//    	var lastRow = $table.find('tr:last');
+//    	var tBody = $table.find('tbody');
+//    	for (var i=1; i<=20; i++) {
+//    		tBody.append(lastRow.clone());
+//    	} 
+//    })
+//	
+//
+//
+//});
 
 
 //Responsiveness of table scroll
-$(document).ready(function () {
-    $(window).resize(function () {
-        $('table[data-toggle="table"]').add($('table[id]')).bootstrapTable('resetView');
-    });	
-
-});
+//$(document).ready(function () {
+//    $(window).resize(function () {
+//        $('table[data-toggle="table"]').add($('table[id]')).bootstrapTable('resetView');
+//    });	
+//
+//});
 
