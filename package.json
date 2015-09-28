@@ -1,32 +1,33 @@
 {
-    "name": "opstool-process-approval",
-    "version": "0.0.0",
-    "description": "a cool project",
-    "main": "module.js",
-    "directories": {
-        "test": "test"
-    },
-    "scripts": {
-        "test": "make test",
-        "postinstall": "node setup/setup.js",
-        "postupdate": "node setup/setup.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/appdevdesigns/opstool-process-approval.git"
-    },
-    "author": "codingMonkey",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/appdevdesigns/opstool-process-approval/issues"
-    },
-    "homepage": "https://github.com/appdevdesigns/opstool-process-approval#readme",
-    "dependencies": {
-        "ad-utils": "appdevdesigns/ad-utils"
-    },
-    "devDependencies": {
-        "chai": "^3.2.0",
-        "mocha": "^2.2.5",
-        "phantomjs": "^1.9.18"
-    }
+  "name": "opstool-process-approval",
+  "version": "0.0.0",
+  "description": "a cool project",
+  "main": "module.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "make test",
+    "postinstall": "node setup/setup.js",
+    "postupdate": "node setup/setup.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/appdevdesigns/opstool-process-approval.git"
+  },
+  "author": "codingMonkey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/appdevdesigns/opstool-process-approval/issues"
+  },
+  "homepage": "https://github.com/appdevdesigns/opstool-process-approval#readme",
+  "dependencies": {
+    "ad-utils": "appdevdesigns/ad-utils"
+  },
+  "devDependencies": {
+    "barrels": "^1.5.0",
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5",
+    "supertest": "^1.1.0"
+  }
 }
