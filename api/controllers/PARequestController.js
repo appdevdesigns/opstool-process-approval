@@ -14,7 +14,7 @@ module.exports = {
 
     _config: {
         model: "parequest", // all lowercase model name
-        actions: true,
+        actions: false,
         shortcuts: true,
         rest: true
     },
@@ -32,6 +32,16 @@ module.exports = {
     	}
     	res.send(fixtureData);
 
+    },
+
+    create:function(req, res) {
+        // this is not allowed:
+        res.forbidden();
+    },
+
+    destroy:function(req, res) {
+        // this is not allowed
+        res.forbidden();
     }
 
 };
