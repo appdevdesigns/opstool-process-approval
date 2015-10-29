@@ -29,6 +29,7 @@
  */
 module.exports = {
 
-    // 'get /route/one' : [ 'action.key.1', ['action.key.2', 'action.key.3']],
+	// this will work for 'get' or 'post':
+    '/opstool-process-approval/parequest' : [ 'process.approval.tool.view' ]
 
 };

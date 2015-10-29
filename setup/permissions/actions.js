@@ -29,13 +29,9 @@ module.exports = {
 
     actions:[
         { 
-            action_key:'[moduleName].view', 
-            action_description:'Allows the user to access the [moduleName] tool.' 
-        },
-        // { 
-        //     action_key:'[moduleName].action.create', 
-        //     action_description:'Allow user to create actions in [moduleName]' 
-        // }
+            action_key:'process.approval.tool.view', 
+            action_description:'Gives the user the ability to access the Process Approval Tool.' 
+        }
     ]
 
 };
