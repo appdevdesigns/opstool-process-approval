@@ -6,13 +6,5 @@
     "password": "test",
     "isActive": 1,
     "languageCode" : "en"
-  },
-  {
-    "id": 2,
-  	"guid": "testNoPerm",
-    "username": "testNoPerm",
-    "password": "test",
-    "isActive": 1,
-    "languageCode" : "en"
   }
 ]
