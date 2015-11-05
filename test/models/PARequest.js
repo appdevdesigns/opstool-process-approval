@@ -24,4 +24,37 @@ describe('PARequest', function() {
 //         })
     })
 
+
+
+//// Leave this here to dump the results of our fixtures
+// it('just checking our Other fixtures', function(done){
+
+//     PermissionRole.find()
+//     .populate('actions')
+//     .exec(function(err, list){
+
+// console.log('PermissionRoles:', list);
+
+//         Permission.find()
+//         .populate('user')
+//         .populate('role')
+//         .exec(function(err, plist){
+
+// console.log('... Permissions:', plist);
+
+//             PermissionAction.find()
+//             .populate('roles')
+//             .exec(function(err, paList){
+
+// console.log('... Actions:', paList);
+//                 done();
+
+
+//             });
+//         })
+//     });
+
+// })
+
+
 });
