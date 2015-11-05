@@ -15,7 +15,7 @@ module.exports = {
     _config: {
         model: "parequest", // all lowercase model name
         actions: false,
-        shortcuts: true,
+        shortcuts: false,
         rest: true
     },
 

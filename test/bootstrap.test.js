@@ -38,12 +38,11 @@ before(function(done) {
       // Load fixtures
       var barrels = new Barrels(path.join(__dirname, 'fixtures'));
 
-      // Populate the DB
-      barrels.populate(function(err) {
+      // Populate the DB with the fixture data
+      barrels.populate(function(err){
         done(err);
-      });
-
-
+      })
+        
   });
 });
 
