@@ -11,18 +11,30 @@
  * http://sailsjs.org/#documentation
  */
 
-// var path = require('path');
-// var ADCore = require(path.join(process.cwd(), 'api', 'services', 'ADCore.js'));
-// var serviceStack = ADCore.policy.serviceStack([ 'policy1', 'policy2']);
+
+var limitScope = function(req, res, next){
+
+    Permissions.limitRouteToScope(req, res, next, {
+        actionKey:'process.approval.tool.view',
+        field:'userID',
+        userField:'guid',
+        error:{
+            code:404,
+            message:'Not Found'
+        }
+    })
+}
+
+
+var scopedStack = ADCore.policy.serviceStack([ limitScope ]);
 
 module.exports = {
 
-//    'opstool-process-approval/YourController': {
-//        method: ['isAuthenticatedService'],
-//        auth: [],
-//        sync: serviceStack,
-//        logout:true
-//    }
+    'opstool-process-approval/PARequestController': {
+       find: scopedStack,
+       findOne: scopedStack,
+       update: scopedStack
+    }
 
 
 };

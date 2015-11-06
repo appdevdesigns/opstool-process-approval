@@ -5,9 +5,9 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
-var fs = require('fs');
-var path = require('path');
-var fixtureData = null;
+// var fs = require('fs');
+// var path = require('path');
+// var fixtureData = null;
 
 
 module.exports = {
@@ -20,19 +20,19 @@ module.exports = {
     },
 
 
-    find: function(req, res) {
+    // find: function(req, res) {
 
 
-    	if (fixtureData == null){
-    		var data = fs.readFileSync(path.join(__dirname, '..', '..', 'test', 'fixtures', 'PARequest.json'));
-    		fixtureData = JSON.parse(data);
+    // 	if (fixtureData == null){
+    // 		var data = fs.readFileSync(path.join(__dirname, '..', '..', 'test', 'fixtures', 'PARequest.json'));
+    // 		fixtureData = JSON.parse(data);
 
-    		fixtureData.splice(fixtureData.length-1, 1);  // <-- this one isn't supposed to be returned.
+    // 		fixtureData.splice(fixtureData.length-1, 1);  // <-- this one isn't supposed to be returned.
 
-    	}
-    	res.send(fixtureData);
+    // 	}
+    // 	res.send(fixtureData);
 
-    },
+    // },
 
     create:function(req, res) {
         // this is not allowed:

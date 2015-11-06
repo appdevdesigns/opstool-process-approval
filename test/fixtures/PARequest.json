@@ -1,7 +1,7 @@
 [
   {
     "actionKey":"tool.action.key.1",
-    "userID":"user1",
+    "userID":"user.1",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
@@ -55,7 +55,7 @@
   },
   {
     "actionKey":"tool.action.key.1",
-    "userID":"user2",
+    "userID":"user.2",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
@@ -109,7 +109,7 @@
   },
   {
     "actionKey":"tool.action.key.1",
-    "userID":"user2",
+    "userID":"user.2",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
