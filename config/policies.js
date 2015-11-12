@@ -14,15 +14,15 @@
 
 var limitScope = function(req, res, next){
 
-    Permissions.limitRouteToScope(req, res, next, {
-        actionKey:'process.approval.tool.view',
+    Permissions.limitRouteToUserActionScope(req, res, next, {
         field:'userID',
-        userField:'guid',
+        // userField:'guid',
         error:{
             code:404,
             message:'Not Found'
         }
-    })
+    });
+
 }
 
 
@@ -31,10 +31,14 @@ var scopedStack = ADCore.policy.serviceStack([ limitScope ]);
 module.exports = {
 
     'opstool-process-approval/PARequestController': {
-       find: scopedStack,
-       findOne: scopedStack,
-       update: scopedStack
+        create: false,
+        add: false,
+        populate: false,
+        remove: false,
+        destroy: false,
+        find: scopedStack,
+        findOne: scopedStack,
+        update: scopedStack
     }
-
 
 };

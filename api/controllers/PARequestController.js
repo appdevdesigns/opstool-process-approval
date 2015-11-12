@@ -34,15 +34,6 @@ module.exports = {
 
     // },
 
-    create:function(req, res) {
-        // this is not allowed:
-        res.forbidden();
-    },
-
-    destroy:function(req, res) {
-        // this is not allowed
-        res.forbidden();
-    }
 
 };
 
