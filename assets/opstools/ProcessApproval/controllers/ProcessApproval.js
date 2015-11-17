@@ -16,6 +16,8 @@ function(){
             ITEM_SELECTED   : 'Transaction.Selected'
         }, 
 
+
+
         init: function (element, options) {
             var self = this;
             options = AD.defaults({
@@ -64,7 +66,7 @@ function(){
             // when an item is selected in our PendingTransactions list, pass 
             // that item on to the ApprovalWorkspace Controller
             // @param: {obj} transaction  The transaction that was selected
-            this.controllers.PendingTransactions.element.on(this.CONST.ASSIGNMENTADD, function(event, transaction) {
+            this.controllers.PendingTransactions.element.on(this.CONST.ITEM_SELECTED, function(event, transaction) {
 
                 console.log(' ... Transaction Selected : ', transaction);
 
@@ -74,11 +76,20 @@ function(){
         },
 
 
+        resize: function(data) {
 
-        '.ad-item-add click': function ($el, ev) {
+            this._super(data);
 
-            ev.preventDefault();
+            this.controllers.PendingTransactions.resize(data.height);
+            
         }
+
+
+
+        // '.ad-item-add click': function ($el, ev) {
+
+        //     ev.preventDefault();
+        // }
 
 
     });

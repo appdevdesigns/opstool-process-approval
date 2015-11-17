@@ -12,7 +12,7 @@
                     <div class="op-widget-body">
                       <ul class="op-list">
                           
-                          <li mockup-show="new-activity" class="op-container active">
+                          <li mockup-show="new-activity" class="op-container active mockup">
                             <span class="icon"><i class="fa fa-calendar fa-fw"></i></span>
                             <div><strong>New Activity</strong><br>
                                       "Current Activity Name"
@@ -20,15 +20,27 @@
                                       date: 10 August 1990
                             </div>
                           </li>
-                          <li mockup-show="new-activity" class="op-container">
-                            <span class="icon"><i class="fa fa-calendar fa-fw"></i></span>
-                            <div><strong>New Activity</strong><br>
-                                      "Current Activity Name"
-                                      by "person submitted by"
-                                      date: 10 August 1990
-                            </div>
-                          </li>
-                          <li mockup-show="new-image" class="op-container">
+
+                          <!-- 
+                          items.forEach(function(item) { 
+console.log('*** item:', item);
+                            var menuData = item.objectData.objectData.menu; 
+console.log('*** objectData:', item.objectData);
+console.log('*** menuData:', menuData);
+
+                          -->
+                            <li mockup-show="new-activity" class="op-container" obj-embed="item" >
+                              <span class="icon"><i class="fa [[= menuData.icon ]] fa-fw"></i></span>
+                              <div><strong>[[= menuData.action.key ]]</strong><br>
+                                        "[[= menuData.instanceRef ]]" <br>
+                                        by "[[= menuData.createdBy ]]"<br>
+                                        date: [[= menuData.date ]]
+                              </div>
+                            </li>
+                          <!--
+                          });
+                          -->
+                          <li mockup-show="new-image" class="op-container mockup">
                             <span class="icon"><i class="fa fa-calendar fa-fw"></i></span>
                             <div><strong>New Image</strong><br>
                                       "Current Activity Name"

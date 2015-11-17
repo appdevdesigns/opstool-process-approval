@@ -1,12 +1,12 @@
 [
   {
-    "actionKey":"tool.action.key.1",
+    "actionKey":"process.approval.tool.view",
     "userID":"user.1",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
       "menu":{
-        "icon":".fa-calendar",
+        "icon":"fa-calendar",
         "action": {
           "key":"[newActivity]",
           "context":"application.context"
@@ -54,13 +54,13 @@
     "comments":[1]
   },
   {
-    "actionKey":"tool.action.key.1",
+    "actionKey":"process.approval.tool.view",
     "userID":"user.2",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
       "menu":{
-        "icon":".fa-calendar",
+        "icon":"fa-calendar",
         "action": {
           "key":"[newActivity]",
           "context":"application.context"
@@ -108,13 +108,13 @@
     "comments":[2,3]
   },
   {
-    "actionKey":"tool.action.key.1",
+    "actionKey":"process.approval.tool.view",
     "userID":"user.2",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
       "menu":{
-        "icon":".fa-calendar",
+        "icon":"fa-calendar",
         "action": {
           "key":"[newActivity]",
           "context":"application.context"
@@ -162,13 +162,13 @@
     "comments":[4]
   },
   {
-    "actionKey":"tool.action.key.1",
+    "actionKey":"process.approval.tool.view",
     "userID":"NotThisUser",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
       "menu":{
-        "icon":".fa-calendar",
+        "icon":"fa-calendar",
         "action": {
           "key":"[newActivity]",
           "context":"application.context"
