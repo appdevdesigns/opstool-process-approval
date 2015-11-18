@@ -24,7 +24,10 @@
                           <!-- 
                           items.forEach(function(item) { 
 console.log('*** item:', item);
-                            var menuData = item.objectData.objectData.menu; 
+                            var menuData = item.objectData.menu; 
+                            if (!menuData) {
+                              menuData = item.objectData.objectData.menu;
+                            }
 console.log('*** objectData:', item.objectData);
 console.log('*** menuData:', menuData);
 
@@ -61,8 +64,14 @@ console.log('*** menuData:', menuData);
 
             <!-- Main stage area -->
             <div class='col-xs-10 op-container op-stage pa-approvalworkspace'>
+
+                <!-- Instructions Panel -->
+                <div class="mockup-display new-activity opsportal-content-area pa-instructionsPanel">
+                       <p> Select an entry on the right to begin editing. </p>            
+                </div>
+
                 <!--Form Activity Area-->
-                <div id="apprv-activity" class="mockup-display new-activity opsportal-content-area">
+                <div id="apprv-activity" class="mockup-display new-activity opsportal-content-area pa-approvalForm">
                       <div class="op-container">
                           <div class="workspace col-lg-9 off-botm20">
                             <h4>New Activity</h4> 
@@ -157,7 +166,7 @@ console.log('*** menuData:', menuData);
                 </div>
                 <!--/Form Activity Area-->
                 <!--Image Area-->
-                <div id="apprv-image" class="mockup-display new-image opsportal-content-area" style="display:none">
+                <div id="apprv-image" class="mockup-display new-image opsportal-content-area mockup" style="display:none">
                       <div class="op-container">
                           <div class="workspace col-lg-9 off-botm20">
                             <h4>New Image</h4> 

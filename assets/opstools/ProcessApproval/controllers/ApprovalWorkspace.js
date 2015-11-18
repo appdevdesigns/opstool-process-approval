@@ -35,13 +35,34 @@ function(){
         initDOM: function () {
 
             // this.element.html(can.view(this.options.templateDOM, {} ));
+            this.dom = {};
+            this.dom.instructions = this.element.find('.pa-instructionsPanel');
 
+            this.element.find('.mockup').remove();
+
+            this.dom.approvalForm = this.element.find('.pa-approvalForm');
+
+
+            this.showDOM('instructions');
+        },
+
+
+        showDOM: function( panel ) {
+
+            for(var p in this.dom) {
+                if (p == panel) {
+                    this.dom[p].show();
+                } else {
+                    this.dom[p].hide();
+                }
+            }
         },
 
 
         setTransaction: function ( transaction ) {
 
             console.warn('*** ApprovalTransaction: received a transaction:', transaction);
+            this.showDOM('approvalForm');
         },
 
 

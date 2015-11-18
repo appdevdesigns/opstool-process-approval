@@ -8,7 +8,7 @@
       "menu":{
         "icon":"fa-calendar",
         "action": {
-          "key":"[newActivity]",
+          "key":"[newActivity.1]",
           "context":"application.context"
         },
         "instanceRef":"field",
@@ -62,7 +62,7 @@
       "menu":{
         "icon":"fa-calendar",
         "action": {
-          "key":"[newActivity]",
+          "key":"[newActivity.2]",
           "context":"application.context"
         },
         "instanceRef":"field",
@@ -116,7 +116,7 @@
       "menu":{
         "icon":"fa-calendar",
         "action": {
-          "key":"[newActivity]",
+          "key":"[newActivity.3]",
           "context":"application.context"
         },
         "instanceRef":"field",
