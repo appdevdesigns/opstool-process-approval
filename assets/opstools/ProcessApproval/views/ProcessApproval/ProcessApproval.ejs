@@ -74,18 +74,18 @@ console.log('*** menuData:', menuData);
                 <div id="apprv-activity" class="mockup-display new-activity opsportal-content-area pa-approvalForm">
                       <div class="op-container">
                           <div class="workspace col-lg-9 off-botm20">
-                            <h4>New Activity</h4> 
-                              <div class="op-container op-block-border">
+                              <h4>[[= transaction.objectData.menu.action.key ]]</h4> 
+                              <div class="op-container op-block-border paa-approvalForm-objTemplate">
                 
-                                 <!--Activity Name-->
+                                 
                                    <div id="opsportal-activityName" class="off-botm20">
                                        <div class="form-group">
                                           <label class="lbl-title">Activity Name<br><span>Please use a name everyone associated with the activity will organize</span></label>
                                           <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Activity Name">
                                        </div>
-                                       <!--/Activity Name-->
+                                  
                          
-                                       <!--Date-->
+                   
                                        <div class="form-inline">
                                         <div class="form-group">
                                           <label for="exampleInputName2">Start Date:</label>
@@ -96,11 +96,10 @@ console.log('*** menuData:', menuData);
                                           <input type="date" class="form-control" id="Enddate" placeholder="">
                                         </div>
                                       </div>  
-                                      <!--/Date--> 
                                   </div> 
-                                  <!--/Activity Name-->
+                                 
                     
-                                  <!--Objective-->
+                                  
                                   <div id="opsportal-objective"  class="off-botm20">
                                       <label class="lbl-title">Team Objectives<br><span>Every Activity must meet at least one objective. Please choose all that apply:</span></label>
                                       <div class="checkbox">
@@ -109,35 +108,37 @@ console.log('*** menuData:', menuData);
                                         <label><input type="checkbox" value="">Objective 3</label><br>
                                       </div>
                                   </div>                    
-                                  <!--/Objective-->
+                                  
                                   <div id="opsportal-description">
                                     <label class="lbl-title">Description<br><span>Please describe this activity using the team objective as guideline:</span></label>
                                       <textarea class="form-control" rows="5"></textarea>
                                   </div>                
                               </div>
-                              <h4>Comments:</h4>
-                              <div class="op-container op-block-border off-botm10">
-                                  <p>previous comment 1</p>
-                                  <p>previous comment 2</p>
-                                  <p>previous comment 3</p>
+                              <h4 class="mockup" >Comments:</h4>
+                              <div class="op-container op-block-border off-botm10 mockup">
+                              <!-- transaction.comments.forEach(function(comment){ -->
+
+                                  <p>[[= comment.comment ]]</p>
+
+                              <!-- }) -->
                               </div>
-                            <textarea class="form-control" rows="5">Admin Comments</textarea>
-                              <!--Action Buttons-->
+                              <textarea class="form-control mockup" rows="5">Admin Comments</textarea>
+                            
                               <div class="op-container op-block nomargintop">
                                   <button class="btn btn-success float-right" type="submit">Accept</button>
-                                  <button class="btn btn-info  float-right offset-15" type="submit">Request</button>
+                                  <button class="btn btn-info  float-right offset-15 mockup" type="submit">Request</button>
                                   <button class="btn btn-warning float-right  offset-15" type="submit"><i class="fa fa-hand-paper-o"></i>Deny</button>
                               </div>    
-                              <!--/Action Buttons-->                
+                                             
                           </div>
-                          <!--Submitted By Area-->
-                          <div id="submittedby" class="col-lg-3">
-                              <div class="op-container op-block-border">
+                          
+                          <div class="col-lg-3">
+                              <div class="op-container op-block-border paa-approvalForm-relatedTemplate">
                                   <h4>Submitted By:</h4>
-                                  <!--Avatar & Team-->
+
                                   <div class="row op-container">
                                     <div class="col-xs-6 col-sm-3 col-lg-6 nopadR">
-                                          <img class="img-responsive" src="images/opsportal/default-avatar.png" alt="Responsive image" >
+                                          <img class="img-responsive" src="//images/opsportal/default-avatar.png" alt="Responsive image" >
                                       </div>
                                       <div class="col-xs-6 col-sm-9 col-lg-6 nopadR">
                                            <h2 class="nomargintop">Nick Fury</h2>
@@ -147,7 +148,7 @@ console.log('*** menuData:', menuData);
                                            <p>team c</p>
                                       </div>                        
                                   </div>
-                                  <!--/Avatar & Team-->
+
                                   <div class="op-container">
                                     <h4 class="off-botm20">Created On: 12 Dec 2015</h4>
                                       <div class="op-container off-botm20">
@@ -161,7 +162,7 @@ console.log('*** menuData:', menuData);
                                   </div>
                               </div>       
                           </div>
-                          <!--/Submitted By Area-->    
+                            
                       </div>    
                 </div>
                 <!--/Form Activity Area-->

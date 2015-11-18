@@ -24,7 +24,7 @@
           "activity_description":"Put together the team.",
           "objectives":[ 1, 2, 3]
         },
-        "view":"opstools/ProcessApproval/views/testActivity.ejs",
+        "view":"//opstools/ProcessApproval/views/testActivity.ejs",
         "viewData":{
           "objectives":[
             { "id":1, "objective_label":"Stop Hydra" },
@@ -35,7 +35,7 @@
         }
       },
       "relatedInfo":{
-        "view":"opstools/ProcessApproval/views/testRelated.ejs",
+        "view":"//opstools/ProcessApproval/views/testRelated.ejs",
         "viewData":{
           "user":{
             "displayName":"Nick Fury",
@@ -78,7 +78,7 @@
           "activity_description":"Place to retreat ... just in case.",
           "objectives":[ 1, 2, 4]
         },
-        "view":"opstools/ProcessApproval/views/testActivity.ejs",
+        "view":"//opstools/ProcessApproval/views/testActivity.ejs",
         "viewData":{
           "objectives":[
             { "id":1, "objective_label":"Stop Hydra" },
@@ -89,7 +89,7 @@
         }
       },
       "relatedInfo":{
-        "view":"opstools/ProcessApproval/views/testRelated.ejs",
+        "view":"//opstools/ProcessApproval/views/testRelated.ejs",
         "viewData":{
           "user":{
             "displayName":"Nick Fury",
@@ -132,7 +132,7 @@
           "activity_description":"Place to retreat ... just in case.",
           "objectives":[ 1, 2, 4]
         },
-        "view":"opstools/ProcessApproval/views/notThere.ejs",
+        "view":"//opstools/ProcessApproval/views/notThere.ejs",
         "viewData":{
           "objectives":[
             { "id":1, "objective_label":"Stop Hydra" },
@@ -143,7 +143,7 @@
         }
       },
       "relatedInfo":{
-        "view":"opstools/ProcessApproval/views/testRelated.ejs",
+        "view":"//opstools/ProcessApproval/views/testRelated.ejs",
         "viewData":{
           "user":{
             "displayName":"Nick Fury",
@@ -186,7 +186,7 @@
           "activity_description":"Place to retreat ... just in case.",
           "objectives":[ 1, 2, 4]
         },
-        "view":"opstools/ProcessApproval/views/notThere.ejs",
+        "view":"//opstools/ProcessApproval/views/notThere.ejs",
         "viewData":{
           "objectives":[
             { "id":1, "objective_label":"Stop Hydra" },
@@ -197,7 +197,7 @@
         }
       },
       "relatedInfo":{
-        "view":"opstools/ProcessApproval/views/testRelated.ejs",
+        "view":"//opstools/ProcessApproval/views/testRelated.ejs",
         "viewData":{
           "user":{
             "displayName":"Nick Fury",
