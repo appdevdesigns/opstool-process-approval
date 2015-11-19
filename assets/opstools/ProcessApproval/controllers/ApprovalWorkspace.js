@@ -101,8 +101,17 @@ function(){
 
 
 
-        '.ad-item-add click': function ($el, ev) {
+        '.pa-approvalform-submit click': function($el, ev) {
+console.log('button clicked!');
 
+            this.transaction.attr('status', $el.attr('pa-status'));
+            this.transaction.save()
+            .fail(function(err){
+                console.log(err);
+            })
+            .then(function(updatedTrans){
+                console.log('... transaction saved!');
+            })
             ev.preventDefault();
         }
 
