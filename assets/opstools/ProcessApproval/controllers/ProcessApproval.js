@@ -73,6 +73,7 @@ function(){
                 // pass the transaction off to the ApprovalWorkspace
                 _this.controllers.ApprovalWorkspace.setTransaction(transaction);
             });
+
         },
 
 
@@ -83,13 +84,6 @@ function(){
             this.controllers.PendingTransactions.resize(data.height);
             
         }
-
-
-
-        // '.ad-item-add click': function ($el, ev) {
-
-        //     ev.preventDefault();
-        // }
 
 
     });

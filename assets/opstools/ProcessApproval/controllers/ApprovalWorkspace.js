@@ -2,6 +2,7 @@
 steal(
         // List your Controller's dependencies here:
         'appdev',
+        'OpsPortal/classes/OpsButtonBusy.js',
 //        'opstools/ProcessApproval/models/Projects.js',
 //        'appdev/widgets/ad_delete_ios/ad_delete_ios.js',
         // '//opstools/ProcessApproval/views/ApprovalWorkspace/ApprovalWorkspace.ejs',
@@ -13,7 +14,7 @@ function(){
 
 
         init: function (element, options) {
-            var self = this;
+            var _this = this;
             options = AD.defaults({
                     // templateDOM: '//opstools/ProcessApproval/views/ApprovalWorkspace/ApprovalWorkspace.ejs'
             }, options);
@@ -24,10 +25,27 @@ function(){
 
 
             this.transaction = null;
+            this.buttons = {};
 
             this.initDOM();
 
+        },
 
+
+        buttonsEnable: function() {
+
+            for (var b in this.buttons){
+                this.buttons[b].enable();
+            }
+        },
+
+
+
+        buttonsDisable: function(){
+
+            for (var b in this.buttons){
+                this.buttons[b].disable();
+            }
         },
 
 
@@ -53,6 +71,7 @@ function(){
             // this.element.html(can.view(this.options.templateDOM, {} ));
             this.dom = {};
             this.dom.instructions = this.element.find('.pa-instructionsPanel');
+            this.dom.allDone = this.element.find('.pa-allDonePanel');
 
             this.element.find('.mockup').remove();
 
@@ -69,6 +88,9 @@ function(){
             // clear the form
             this.dom.approvalForm.html();
 
+
+            
+            
 
             this.showDOM('instructions');
         },
@@ -87,6 +109,7 @@ function(){
 
 
         setTransaction: function ( transaction ) {
+            var _this = this;
 
             console.warn('*** ApprovalTransaction: received a transaction:', transaction);
             this.transaction = transaction;
@@ -96,18 +119,31 @@ function(){
             this.embeddTemplate('.pa-approvalForm-objTemplate', this.transaction.objectData.form);
             this.embeddTemplate('.pa-approvalForm-relatedTemplate', this.transaction.objectData.relatedInfo);
 
+            // for each of my buttons (referenced by pa-status values)
+            ['approved', 'rejected'].forEach(function(status){
+                _this.buttons[status] = new AD.op.ButtonBusy(_this.element.find('[pa-status="'+status+'"]'));
+            })
+            
             this.showDOM('approvalForm');
         },
 
 
 
         '.pa-approvalform-submit click': function($el, ev) {
-console.log('button clicked!');
+            var _this = this;
 
-            this.transaction.attr('status', $el.attr('pa-status'));
+            this.buttonsDisable();
+            
+            var status = $el.attr('pa-status');
+            
+            this.buttons[status].busy();
+            
+            this.transaction.attr('status', status);
             this.transaction.save()
             .fail(function(err){
-                console.log(err);
+                console.error(err);
+                _this.buttons[status].ready();
+                _this.buttonsEnable();
             })
             .then(function(updatedTrans){
                 console.log('... transaction saved!');

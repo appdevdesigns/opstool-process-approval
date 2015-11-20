@@ -41,6 +41,45 @@ console.log('... here is our list of pending transactions:', list);
             });
 
 
+            // listen for updates to any of our PARequest models:
+            this.PARequest.bind('updated', function( ev, request ) {
+
+                // only do something if this is no longer 'pending'
+                if (request.status != 'pending') {
+
+                    // verify this request is in our displayed list
+                    var atIndex = _this.data.listTransactions.indexOf(request);
+                    if (atIndex > -1) {
+
+                        // if so, remove the entry.
+                        _this.data.listTransactions.splice(atIndex, 1);
+
+
+                        // decide which remaining element we want to click:
+                        var clickIndx = atIndex;  // choose next one if there.
+                        if (_this.data.listTransactions.attr('length') <= clickIndx ) {
+
+                            // not enough entries, so choose the last one then:
+                            clickIndx = _this.data.listTransactions.attr('length')-1;
+
+                        }
+
+                        // if there is one to select
+                        if (clickIndx >= 0) {
+
+                            // get that LI item:
+                            var allLIs = _this.element.find('li');
+                            var indexLI = allLIs[clickIndx];
+
+                            // now select this LI:
+                            _this.selectLI($(indexLI));
+
+                        } 
+
+                    }
+                }
+            });
+
         },
 
 
@@ -70,14 +109,20 @@ console.log('... here is our list of pending transactions:', list);
         },
 
 
-
-        'li click': function ($el, ev) {
+        selectLI: function($el) {
 
             this.element.find('.active').removeClass('active');
             $el.addClass('active');
 
             var model = $el.data('item');
             this.element.trigger(this.options.eventItemSelected, model);
+        },
+
+
+
+        'li click': function ($el, ev) {
+
+            this.selectLI($el);
 
             ev.preventDefault();
         }
