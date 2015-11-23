@@ -33,6 +33,24 @@ function(){
             this.initDOM();
             this.initControllers();
             this.initEvents();
+            this.loadListData();
+        },
+
+
+        loadListData:function() {
+            var _this = this;
+
+            // now load our data from the server:
+            this.PARequest = AD.Model.get('opstools.ProcessApproval.PARequest');
+            this.PARequest.findAll({ status:'pending'})
+            .fail(function(err){
+console.error('!!! Dang.  something went wrong:', err);
+            })
+            .then(function(list){
+                _this.controllers.PendingTransactions.setList(list);
+                _this.controllers.ApprovalWorkspace.setList(list);
+console.log('... here is our list of pending transactions:', list);
+            });
         },
 
 

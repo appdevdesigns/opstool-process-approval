@@ -27,6 +27,9 @@ function(){
             this.transaction = null;
             this.buttons = {};
 
+            this.data = {};
+            this.data.listTransactions = null;
+
             this.initDOM();
 
         },
@@ -60,7 +63,28 @@ function(){
             }
 
             var $el = this.element.find(sel);
-            $el.html( can.view(templateInfo.view, data) );
+
+            try {
+
+                $el.html( can.view(templateInfo.view, data) );
+
+            } catch(e) {
+
+                // This is most likely a template reference error.
+                AD.error.log('Error displaying template:'+templateInfo.view, { error:e });
+
+                var displayData = data.data || data;
+                var errorDisplay = [ 
+                    'Error displaying provided object template ('+templateInfo.view+')',
+                    'Here is the raw data:'
+                ];
+
+                for(var d in displayData.attr()) {
+                    errorDisplay.push(d+' : '+ displayData[d]);
+                }
+                   
+                $el.html(errorDisplay.join('<br>'));
+            }
 
         },
 
@@ -108,11 +132,30 @@ function(){
         },
 
 
+
+        setList:function(list) {
+            var _this = this;
+
+            this.data.listTransactions = list;
+            this.data.listTransactions.bind('length', function() {
+
+                // if the list is empty (length == 0)
+                if (_this.data.listTransactions.attr('length') == 0) {
+
+                    // now show the 'AllDone' panel:
+                    _this.showDOM('allDone');
+                }
+            })
+        },
+
+
+
         setTransaction: function ( transaction ) {
             var _this = this;
 
             console.warn('*** ApprovalTransaction: received a transaction:', transaction);
             this.transaction = transaction;
+
 
             this.dom.approvalForm.html( can.view('PA_ApprovalForm', {transaction: this.transaction}));
 

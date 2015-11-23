@@ -28,18 +28,8 @@ function(){
             this.data = {};
             this.data.listTransactions = null;
 
-            // now load our data from the server:
+            // now get access to the PARequest Model:
             this.PARequest = AD.Model.get('opstools.ProcessApproval.PARequest');
-            this.PARequest.findAll({ status:'pending'})
-            .fail(function(err){
-console.error('!!! Dang.  something went wrong:', err);
-            })
-            .then(function(list){
-                _this.data.listTransactions = list;
-                _this.dom.list.html(can.view('PendingTransactions_List', {items:list}));
-console.log('... here is our list of pending transactions:', list);
-            });
-
 
             // listen for updates to any of our PARequest models:
             this.PARequest.bind('updated', function( ev, request ) {
@@ -116,6 +106,12 @@ console.log('... here is our list of pending transactions:', list);
 
             var model = $el.data('item');
             this.element.trigger(this.options.eventItemSelected, model);
+        },
+
+
+        setList: function(list){ 
+            this.data.listTransactions = list;
+            this.dom.list.html(can.view('PendingTransactions_List', {items:list}));
         },
 
 
