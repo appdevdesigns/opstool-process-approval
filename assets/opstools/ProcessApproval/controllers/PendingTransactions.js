@@ -27,12 +27,13 @@ function(){
 
             this.data = {};
             this.data.listTransactions = null;
+            this.data.selectedRequest = null;
 
             // now get access to the PARequest Model:
             this.PARequest = AD.Model.get('opstools.ProcessApproval.PARequest');
 
             // listen for updates to any of our PARequest models:
-            this.PARequest.bind('updated', function( ev, request ) {
+            this.PARequest.on('updated', function( ev, request ) {
 
                 // only do something if this is no longer 'pending'
                 if (request.status != 'pending') {
@@ -45,30 +46,56 @@ function(){
                         _this.data.listTransactions.splice(atIndex, 1);
 
 
-                        // decide which remaining element we want to click:
-                        var clickIndx = atIndex;  // choose next one if there.
-                        if (_this.data.listTransactions.attr('length') <= clickIndx ) {
+                        // if this is the same item we were working on:
+                        if (_this.data.selectedRequest  
+                            && (_this.data.selectedRequest.getID() == request.getID()) ) { 
 
-                            // not enough entries, so choose the last one then:
-                            clickIndx = _this.data.listTransactions.attr('length')-1;
 
+                            // we're gonna remove this so clear our selectedRequest:
+                            _this.data.selectedRequest = null;
+
+                            // decide which remaining element we want to click:
+                            var clickIndx = atIndex;  // choose next one if there.
+                            if (_this.data.listTransactions.attr('length') <= clickIndx ) {
+
+                                // not enough entries, so choose the last one then:
+                                clickIndx = _this.data.listTransactions.attr('length')-1;
+
+                            }
+
+                            // if there is one to select
+                            if (clickIndx >= 0) {
+
+                                // get that LI item:
+                                var allLIs = _this.element.find('li');
+                                var indexLI = allLIs[clickIndx];
+
+                                // now select this LI:
+                                _this.selectLI($(indexLI));
+
+                            } 
                         }
-
-                        // if there is one to select
-                        if (clickIndx >= 0) {
-
-                            // get that LI item:
-                            var allLIs = _this.element.find('li');
-                            var indexLI = allLIs[clickIndx];
-
-                            // now select this LI:
-                            _this.selectLI($(indexLI));
-
-                        } 
 
                     }
                 }
             });
+
+
+            // AD.comm.socket.subscribe('parequest.messaged', function(message, data){
+            this.PARequest.on('messaged', function( ev, data ) {
+
+                // one of our transactions was messaged
+
+                // see if we have an LI for this transaction:
+                var foundEL = _this.element.find('[parequest-id="'+data.id+'"]');
+                if (data.data.locked) {
+                    foundEL.addClass('parequest-locked');
+                } else {
+                    foundEL.removeClass('parequest-locked');
+                }
+console.log('... parequest.messaged:', data);
+
+            })
 
         },
 
@@ -101,24 +128,37 @@ function(){
 
         selectLI: function($el) {
 
+            // if we had locked a previous entry, then unlock it:
+            if (this.data.selectedRequest) {
+                this.data.selectedRequest.unlock();
+            }
+
+
             this.element.find('.active').removeClass('active');
             $el.addClass('active');
 
             var model = $el.data('item');
+            this.data.selectedRequest = model;
+
+            // lock the newly selected model:
+            this.data.selectedRequest.lock();
+
             this.element.trigger(this.options.eventItemSelected, model);
         },
 
 
         setList: function(list){ 
             this.data.listTransactions = list;
-            this.dom.list.html(can.view('PendingTransactions_List', {items:list}));
+            this.dom.list.html(can.view('PendingTransactions_List', {items:list, data:this.data}));
         },
 
 
 
         'li click': function ($el, ev) {
 
-            this.selectLI($el);
+            if (!$el.hasClass('parequest-locked')) {
+                this.selectLI($el);
+            }
 
             ev.preventDefault();
         }

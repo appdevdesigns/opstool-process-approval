@@ -6,6 +6,9 @@ steal(
     // Namespacing conventions:
     // AD.Model.extend('[application].[Model]', {static}, {instance} );  --> Object
     AD.Model.extend('opstools.ProcessApproval.PARequest', {
+
+        useSockets: true,
+
 /*
         findAll: 'GET /opstool-process-approval/parequest',
         findOne: 'GET /opstool-process-approval/parequest/{id}',
@@ -17,6 +20,14 @@ steal(
         fieldLabel:'actionKey'      // which field is considered the Label
 */
     },{
+
+        lock:function() {
+            return AD.comm.socket.get({ url: '/opstool-process-approval/parequest/lock/'+this.getID() });
+        }, 
+
+        unlock:function() {
+            return AD.comm.socket.get({ url: '/opstool-process-approval/parequest/unlock/'+this.getID() });
+        }
 /*
         // Already Defined:
         model: function() {},   // returns the Model Class for an instance

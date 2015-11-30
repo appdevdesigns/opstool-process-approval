@@ -23,16 +23,19 @@
 
                           <!-- 
                           items.forEach(function(item) { 
-console.log('*** item:', item);
+
                             var menuData = item.objectData.menu; 
                             if (!menuData) {
                               menuData = item.objectData.objectData.menu;
                             }
-console.log('*** objectData:', item.objectData);
-console.log('*** menuData:', menuData);
+
+                            var active = '';
+                            if (data.selectedRequest && data.selectedRequest.getID() == item.getID() ) {
+                              active = ' active ';
+                            }
 
                           -->
-                            <li mockup-show="new-activity" class="op-container" obj-embed="item" >
+                            <li mockup-show="new-activity" class="op-container [[= active ]]" parequest-id="[[= item.getID() ]]" obj-embed="item" >
                               <span class="icon"><i class="fa [[= menuData.icon ]] fa-fw"></i></span>
                               <div><strong>[[= menuData.action.key ]]</strong><br>
                                         "[[= menuData.instanceRef ]]" <br>

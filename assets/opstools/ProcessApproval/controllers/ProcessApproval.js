@@ -17,7 +17,6 @@ function(){
         }, 
 
 
-
         init: function (element, options) {
             var self = this;
             options = AD.defaults({
@@ -30,10 +29,14 @@ function(){
             // Call parent init
             this._super(element, options);
 
+            this.data = {};
+            this.data.list = null;
+
             this.initDOM();
             this.initControllers();
             this.initEvents();
             this.loadListData();
+
         },
 
 
@@ -49,8 +52,42 @@ console.error('!!! Dang.  something went wrong:', err);
             .then(function(list){
                 _this.controllers.PendingTransactions.setList(list);
                 _this.controllers.ApprovalWorkspace.setList(list);
+                _this.data.list = list;
 console.log('... here is our list of pending transactions:', list);
             });
+
+            this.PARequest.on('stale', function(m,d){
+
+                // we only want pending transactions:
+                var condition = {
+                    status: "pending"
+                };
+
+
+                // ignore any existing transactions in our list:
+                var currentIDs = [];
+                _this.data.list.forEach(function(item){
+                    currentIDs.push(item.getID());
+                })
+                if (currentIDs.length > 0) {
+                    condition.id = { 
+                        '!':currentIDs 
+                    };
+                };
+
+// console.log('... condition:', condition);
+
+                _this.PARequest.findAll(condition)
+                .fail(function(err){
+console.error('!!! Dang.  something went wrong:', err);
+                })
+                .then(function(listNew){
+                    listNew.forEach(function(item){
+                        _this.data.list.push(item);
+                    })
+                })
+
+            })
         },
 
 

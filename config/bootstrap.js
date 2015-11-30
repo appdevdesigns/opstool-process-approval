@@ -50,6 +50,11 @@ module.exports = function (cb) {
 			paData.status = 'pending';
 
 			PARequest.create(paData)
+			.then(function(newEntry){
+
+				// tell all connected sockets that their info is "stale"
+				sails.sockets.broadcast('sails_model_create_parequest', 'parequest', { verb:'stale'});
+			})
 			.catch(function(err){
 				ADCore.error.log('unable to create this PARequest entry', {
 					error:err,
