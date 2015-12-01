@@ -3,9 +3,9 @@ steal(
         // List your Controller's dependencies here:
         'appdev',
         '//OpsPortal/classes/OpsTool.js',
-        '/opstools/ProcessApproval/controllers/PendingTransactions.js',
-        '/opstools/ProcessApproval/controllers/ApprovalWorkspace.js',
-        '/opstools/ProcessApproval/views/ProcessApproval/ProcessApproval.ejs',
+        'opstools/ProcessApproval/controllers/PendingTransactions.js',
+        'opstools/ProcessApproval/controllers/ApprovalWorkspace.js',
+        '//opstools/ProcessApproval/views/ProcessApproval/ProcessApproval.ejs',
 function(){
 
     // Namespacing conventions:

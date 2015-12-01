@@ -7,7 +7,7 @@ steal(
     // AD.Model.extend('[application].[Model]', {static}, {instance} );  --> Object
     AD.Model.extend('opstools.ProcessApproval.PARequest', {
 
-        useSockets: true,
+        useSockets: true
 
 /*
         findAll: 'GET /opstool-process-approval/parequest',
