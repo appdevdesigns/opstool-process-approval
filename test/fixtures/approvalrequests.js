@@ -1,7 +1,7 @@
 [
   {
-    "actionKey":"tool.action.key.1",
-    "userID":"user1",
+    "actionKey":"process.approval.tool.view",
+    "userID":"user.1",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
@@ -54,8 +54,8 @@
     "comments":[1]
   },
   {
-    "actionKey":"tool.action.key.1",
-    "userID":"user2",
+    "actionKey":"process.approval.tool.view",
+    "userID":"user.2",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
@@ -108,8 +108,8 @@
     "comments":[2,3]
   },
   {
-    "actionKey":"tool.action.key.1",
-    "userID":"user2",
+    "actionKey":"process.approval.tool.view",
+    "userID":"user.2",
     "callback":"return.message.queue.1",
     "status":"pending",
     "objectData":{
@@ -162,7 +162,7 @@
     "comments":[4]
   },
   {
-    "actionKey":"tool.action.key.1",
+    "actionKey":"process.approval.tool.view",
     "userID":"NotThisUser",
     "callback":"return.message.queue.1",
     "status":"pending",
