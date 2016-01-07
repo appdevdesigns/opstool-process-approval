@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/appdevdesigns/opstool-process-approval#readme",
   "dependencies": {
-    "ad-utils": "appdevdesigns/ad-utils"
+    "ad-utils": "appdevdesigns/ad-utils",
+    "supertest": "^1.1.0"
   },
   "devDependencies": {
     "barrels": "^1.5.0",
