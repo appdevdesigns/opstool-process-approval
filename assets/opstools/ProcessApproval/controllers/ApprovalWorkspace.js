@@ -67,6 +67,8 @@ function(){
             try {
 
                 $el.html( can.view(templateInfo.view, data) );
+                AD.lang.label.translate($el);
+                
 
             } catch(e) {
 
@@ -162,6 +164,8 @@ function(){
             this.embeddTemplate('.pa-approvalForm-objTemplate', this.transaction.objectData.form);
             this.embeddTemplate('.pa-approvalForm-relatedTemplate', this.transaction.objectData.relatedInfo);
 
+            this.form = new AD.op.Form(this.element.find('.pa-approvalForm-objTemplate'));
+
             // for each of my buttons (referenced by pa-status values)
             ['approved', 'rejected'].forEach(function(status){
                 _this.buttons[status] = new AD.op.ButtonBusy(_this.element.find('[pa-status="'+status+'"]'));
@@ -180,8 +184,12 @@ function(){
             var status = $el.attr('pa-status');
             
             this.buttons[status].busy();
+
+            var newValues = this.form.values();
+// console.log(newValues);
             
             this.transaction.attr('status', status);
+            this.transaction.attr('updatedValues', newValues);
             this.transaction.save()
             .fail(function(err){
                 console.error(err);

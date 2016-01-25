@@ -1,4 +1,8 @@
-
+<!-- 
+#  Appdev Label Info:
+#label_context:opstool-ProcessApproval
+#language_code:en
+-->
 
       <!-- Widget -->  
 
@@ -6,8 +10,8 @@
                 <!--Left bar-->
                 <div  class="op-container op-widget sticky pa-pendingtransactions" >
                     <div class="op-widget-masthead">
-                        <h3><strong>Pending Transactions</strong></h3>
-                        <p>Choose one of the pending transactions to review</p>
+                        <h3><strong><span app-label-key="parequest.pendingTransactions">Pending Transactions</span></strong></h3>
+                        <p><span app-label-key="parequest.pendingTransactionsInstructions">Choose one of the pending transactions to review</span></p>
                     </div>        
                     <div class="op-widget-body">
                       <ul class="op-list">
@@ -39,10 +43,10 @@
                           -->
                             <li mockup-show="new-activity" class="op-container [[= active ]]" parequest-id="[[= item.getID() ]]" obj-embed="item" >
                               <span class="icon"><i class="fa [[= menuData.icon ]] fa-fw"></i></span>
-                              <div><strong>[[= menuData.action.key ]]</strong><br>
+                              <div><strong>[[- AD.lang.label.getLabelSpan(menuData.action.key) ]]</strong><br>
                                         "[[= itemName ]]" <br>
-                                        by "[[= menuData.createdBy ]]"<br>
-                                        date: [[= menuData.date ]]
+                                        [[- AD.lang.label.getLabelSpan('parequest.by') ]] "[[= menuData.createdBy ]]"<br>
+                                        [[- AD.lang.label.getLabelSpan('parequest.date') ]]: [[= menuData.date ]]
                               </div>
                             </li>
                           <!--
@@ -72,19 +76,19 @@
 
                 <!-- Instructions Panel -->
                 <div class="mockup-display new-activity opsportal-content-area pa-instructionsPanel">
-                       <p> Select an entry on the right to begin editing. </p>            
+                       <p><span app-label-key="parequest.instructions">Select an entry on the right to begin editing.</span> </p>            
                 </div>
                 
                 <!-- AllDone Panel -->
                 <div class="mockup-display new-activity opsportal-content-area pa-allDonePanel">
-                       <p> That's it!  You're all done. </p>            
+                       <p><span app-label-key="parequest.alldone">That's it!  You're all done.</span> </p>            
                 </div>
 
                 <!--Form Activity Area-->
                 <div id="apprv-activity" class="mockup-display new-activity opsportal-content-area pa-approvalForm">
                       <div class="op-container">
                           <div class="workspace col-lg-9 off-botm20">
-                              <h4>[[= transaction.objectData.menu.action.key ]]</h4> 
+                              <h4>[[- AD.lang.label.getLabelSpan(transaction.objectData.menu.action.key) ]]</h4> 
                               <div class="op-container op-block-border pa-approvalForm-objTemplate">
                 
                                  
@@ -135,9 +139,9 @@
                               <textarea class="form-control mockup" rows="5">Admin Comments</textarea>
                             
                               <div class="op-container op-block nomargintop">
-                                  <button class="btn btn-success float-right pa-approvalform-submit" pa-status="approved" ><i class="fa"></i>Accept</button>
-                                  <button class="btn btn-info  float-right offset-15 pa-approvalform-submit mockup" pa-status="requesting" >Request</button>
-                                  <button class="btn btn-warning float-right  offset-15 pa-approvalform-submit" pa-status="rejected"><i class="fa fa-hand-paper-o"></i>Deny</button>
+                                  <button class="btn btn-success float-right pa-approvalform-submit" pa-status="approved" ><i class="fa"></i><span app-label-key="parequest.accept">Accept</span></button>
+                                  <button class="btn btn-info  float-right offset-15 pa-approvalform-submit mockup" pa-status="requesting" ><span app-label-key="parequest.request">Request</span></button>
+                                  <button class="btn btn-warning float-right  offset-15 pa-approvalform-submit" pa-status="rejected"><i class="fa fa-hand-paper-o"></i><span app-label-key="parequest.deny">Deny</span></button>
                               </div>    
                                              
                           </div>

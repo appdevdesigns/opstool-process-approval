@@ -68,16 +68,20 @@ module.exports = {
       // 1) return our status
       var returnData = {};
       returnData.status = updatedRecord.status;
-
+console.log('... processRequest.  updatedRecord:', updatedRecord);
 
       // 2) if a reference value was given then include it too
       // NOTE: once sails upgrades to lodash v3.x we can do this:
-      // if (_.has(updatedRecord, 'objectData.callback.reference')) {
-      //   returnData.reference = updatedRecord.objectData.callback.reference;
+      // if (_.has(data, 'callback.reference')) {
+      //   returnData.reference = data.callback.reference;
       // }
       // until then:
-      if (updatedRecord.objectData && updatedRecord.objectData.callback && updatedRecord.objectData.callback.reference) {
-        returnData.reference = updatedRecord.objectData.callback.reference;
+      var data = updatedRecord.objectData;
+      if (typeof data == 'string') {
+        data = JSON.parse(data);
+      }
+      if (data && data.callback && data.callback.reference) {
+        returnData.reference = data.callback.reference;
       }
 
 
