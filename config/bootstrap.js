@@ -69,7 +69,9 @@ module.exports = function (cb) {
 
 	// DEVELOP MODE: keep some new Approval Requests coming in:
 	// only do this in develop mode:
-	if (sails.config.environment == 'development') {
+	// and only do this if sails.config.ProcessApproval.autoGenerate setting is set.
+	if ((sails.config.environment == 'development')
+		 && ((sails.config['opstool-process-approval']) && (sails.config['opstool-process-approval'].autoGenerate))) {
 
 		// read in our sample fixture data
 		var fixtureData = null;
@@ -108,12 +110,12 @@ module.exports = function (cb) {
 
     	// create a routine to check if we have less than our default fixture 
 		var checkRequests = function() {
-
+// console.log('...  Check Process Approval Requests')
 			PARequest.find({ status:'pending'})
 			.then(function(list){
 				
 				if (list.length < fixtureData.length) {
-
+// console.log('     ... publish new request!');
 					// publish a new request:
 					ADCore.queue.publish('opsportal.approval.create', fixtureData[fixtureIndex]);
 					fixtureIndex++;
