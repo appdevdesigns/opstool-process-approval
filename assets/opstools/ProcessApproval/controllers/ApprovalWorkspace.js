@@ -186,8 +186,8 @@ function(){
             this.buttons[status].busy();
 
             var newValues = this.form.values();
-// console.log(newValues);
-            
+
+            this.transaction.attr('objectData', {}); // don't want to update this info (or send it back)
             this.transaction.attr('status', status);
             this.transaction.attr('updatedValues', newValues);
             this.transaction.save()

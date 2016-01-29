@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8"
+"Content-Transfer-Encoding: 8bit"
+
+#. #########################################
+#. Labels for context: opstool-ProcessApproval
+#. Source language: en
+#. Target language: en
+#. #########################################
+
+
+
+#. path: opstool-ProcessApproval
+#. code: en
+#. key: parequest.pendingTransactions
+msgid "Pending Transactions"
+msgstr "Pending Transactions"
+
+#. path: opstool-ProcessApproval
+#. code: en
+#. key: parequest.pendingTransactionsInstructions
+msgid "Choose one of the pending transactions to review"
+msgstr "Choose one of the pending transactions to review"
+
+#. path: opstool-ProcessApproval
+#. code: en
+#. key: parequest.instructions
+msgid "Select an entry on the right to begin editing."
+msgstr "Select an entry on the right to begin editing."
+
+#. path: opstool-ProcessApproval
+#. code: en
+#. key: parequest.alldone
+msgid "That's it!  You're all done."
+msgstr "That's it!  You're all done."
+
+#. path: opstool-ProcessApproval
+#. code: en
+#. key: parequest.accept
+msgid "Accept"
+msgstr "Accept"
+
+#. path: opstool-ProcessApproval
+#. code: en
+#. key: parequest.request
+msgid "Request"
+msgstr "Request"
+
+#. path: opstool-ProcessApproval
+#. code: en
+#. key: parequest.deny
+msgid "Deny"
+msgstr "Deny"
+
+#. path: opstool-ProcessApproval
+#. code: en
+#. key: parequest.date
+msgid "date"
+msgstr "date"
+
+#. path: opstool-ProcessApproval
+#. code: en
+#. key: parequest.by
+msgid "by"
+msgstr "by"
+
