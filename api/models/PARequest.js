@@ -65,10 +65,18 @@ module.exports = {
       // then this entry is finished being processed
 
       // Compile data to return to the calling application
+      // {
+      //   status:'approved',  // or 'requesting', or 'rejected'
+      //   reference: { data that was given to us },
+      //   data: { updated values from our form }
+      // }
+
+
       // 1) return our status
       var returnData = {};
       returnData.status = updatedRecord.status;
-console.log('... processRequest.  updatedRecord:', updatedRecord);
+// console.log('... processRequest.  updatedRecord:', updatedRecord);
+
 
       // 2) if a reference value was given then include it too
       // NOTE: once sails upgrades to lodash v3.x we can do this:

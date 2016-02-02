@@ -187,7 +187,10 @@ function(){
 
             var newValues = this.form.values();
 
-            this.transaction.attr('objectData', {}); // don't want to update this info (or send it back)
+            // NOTE: objectData can be quite large, and in some situations can clog the url parsers
+            // so we don't send this info back, which is ok, since the server prevents us from updating
+            // this field anyway.
+            this.transaction.attr('objectData', {}); // don't send this back
             this.transaction.attr('status', status);
             this.transaction.attr('updatedValues', newValues);
             this.transaction.save()
