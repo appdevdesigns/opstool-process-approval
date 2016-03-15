@@ -82,8 +82,12 @@ steal(
 
 							try {
 
-								$el.html(can.view(templateInfo.view, data));
-								AD.lang.label.translate($el);
+								// $el.html(can.view(templateInfo.view, data));
+								// AD.lang.label.translate($el);
+								can.view(templateInfo.view, data, function(frag){
+									$el.html(frag);
+									AD.lang.label.translate($el);
+								})
 
 
 							} catch (e) {
