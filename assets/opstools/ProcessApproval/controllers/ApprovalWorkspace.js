@@ -66,6 +66,20 @@ steal(
 
 							var $el = this.element.find(sel);
 
+							// #fix: new Steal + CanJS path differences:
+							// make sure path is relative from root:
+							//   path:  /path/to/view.ejs
+							// so make sure has beginning '/'
+							if (templateInfo.view[0] != '/') {
+								templateInfo.view = '/'+templateInfo.view;
+							} else {
+
+								// and not '//':
+								if (templateInfo.view[1] == '/') {
+									templateInfo.view = templateInfo.view.replace('//', '/');
+								}
+							}
+
 							try {
 
 								$el.html(can.view(templateInfo.view, data));
