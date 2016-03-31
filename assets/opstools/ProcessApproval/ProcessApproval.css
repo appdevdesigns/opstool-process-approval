@@ -3,7 +3,20 @@
 li.parequest-locked { 
 	background-color: #333333; 
 }
-
+.pa-approvalForm .people {
+	width: 180px; 
+	height: 220px; 
+	float: left; 
+}
+.pa-approvalForm .people strong { 
+	width: 115px; 
+	white-space: nowrap; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	display:inline-block; 
+	margin: 0px; 
+	padding: 0px; 
+}
 .pa-action-buttons {
 	border-top-left-radius: 0px !important;
 	text-align: right !important;
