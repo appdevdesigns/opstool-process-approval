@@ -54,6 +54,7 @@ module.exports = function (cb) {
 
 				// tell all connected sockets that their info is "stale"
 				sails.sockets.broadcast('sails_model_create_parequest', 'parequest', { verb:'stale'});
+				return null;
 			})
 			.catch(function(err){
 				ADCore.error.log('unable to create this PARequest entry', {
@@ -124,6 +125,7 @@ module.exports = function (cb) {
 					}
 
 				}
+				return null;
 			});
 		}
 
