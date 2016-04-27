@@ -15,53 +15,53 @@ msgstr ""
 #. code: th
 #. key: parequest.pendingTransactions
 msgid "Pending Transactions"
-msgstr "[th]Pending Transactions"
+msgstr "รายการที่รอดำเนินการ"
 
 #. path: opstool-ProcessApproval
 #. code: th
 #. key: parequest.pendingTransactionsInstructions
 msgid "Choose one of the pending transactions to review"
-msgstr "[th]Choose one of the pending transactions to review"
+msgstr "เลือกดูรายการที่รอดำเนินการ"
 
 #. path: opstool-ProcessApproval
 #. code: th
 #. key: parequest.instructions
 msgid "Select an entry on the right to begin editing."
-msgstr "[th]Select an entry on the right to begin editing."
+msgstr "เลือกงานที่บันทึกไว้ซึ่งอยู่ด้านขวาเพื่อเริ่มแก้ไข"
 
 #. path: opstool-ProcessApproval
 #. code: th
 #. key: parequest.alldone
 msgid "That's it!  You're all done."
-msgstr "[th]That's it!  You're all done."
+msgstr "เสร็จแล้ว"
 
 #. path: opstool-ProcessApproval
 #. code: th
 #. key: parequest.accept
 msgid "Accept"
-msgstr "[th]Accept"
+msgstr "ยอมรับ"
 
 #. path: opstool-ProcessApproval
 #. code: th
 #. key: parequest.request
 msgid "Request"
-msgstr "[th]Request"
+msgstr "คำขอ"
 
 #. path: opstool-ProcessApproval
 #. code: th
 #. key: parequest.deny
 msgid "Deny"
-msgstr "[th]Deny"
+msgstr "ปฏิเศธ"
 
 #. path: opstool-ProcessApproval
 #. code: th
 #. key: parequest.date
 msgid "date"
-msgstr "[th] date"
+msgstr "วันที่"
 
 #. path: opstool-ProcessApproval
 #. code: th
 #. key: parequest.by
 msgid "by"
-msgstr "[th] by"
+msgstr "โดย"
 
