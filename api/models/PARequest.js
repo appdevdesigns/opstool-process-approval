@@ -96,6 +96,13 @@ module.exports = {
       // 3) add in any changed data submitted from the UI:
       returnData.data = updatedRecord.updatedValues;
 
+      // 4) add display menu info :
+      returnData.menu = {
+        itemName: data.form.data[data.menu.instanceRef] || data.menu.instanceRef,
+        createdBy: data.menu.createdBy,
+        date: data.menu.date
+      };
+
 
       // update the registered application :
       ADCore.queue.publish(updatedRecord.callback, returnData);
