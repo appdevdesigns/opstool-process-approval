@@ -13,7 +13,7 @@
                         <h3><strong><span app-label-key="parequest.pendingTransactions">Pending Transactions</span></strong></h3>
                         <p><span app-label-key="parequest.pendingTransactionsInstructions">Choose one of the pending transactions to review</span></p>
                     </div>        
-                    <div class="op-widget-body">
+                    <div class="op-widget-body" style="overflow-y: auto;">
                       <ul class="op-list">
                           
                           <li mockup-show="new-activity" class="op-container active mockup">
@@ -43,7 +43,7 @@
                           -->
                             <li mockup-show="new-activity" class="op-container [[= active ]]" parequest-id="[[= item.getID() ]]" obj-embed="item" >
                               <span class="icon"><i class="fa [[= menuData.icon ]] fa-fw"></i></span>
-                              <div><strong>[[- AD.lang.label.getLabelSpan(menuData.action.key) ]]</strong><br>
+                              <div style="display: inline-block; vertical-align:top;"><strong>[[- AD.lang.label.getLabelSpan(menuData.action.key) ]]</strong><br>
                                         "[[= itemName ]]" <br>
                                         [[- AD.lang.label.getLabelSpan('parequest.by') ]] "[[= menuData.createdBy ]]"<br>
                                         [[- AD.lang.label.getLabelSpan('parequest.date') ]]: [[= menuData.date ]]
