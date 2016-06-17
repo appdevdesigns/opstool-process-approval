@@ -87,6 +87,11 @@ steal(
 								can.view(templateInfo.view, data, function(frag){
 									$el.html(frag);
 									AD.lang.label.translate($el);
+
+									// find any embedded AD.op.images 
+									$el.find('[ap-op-image]').each(function(i, el){
+										new AD.op.Image(el);
+									});
 								})
 
 
