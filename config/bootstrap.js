@@ -10,9 +10,15 @@
 var fs = require('fs');
 var path = require('path');
 var AD = require('ad-utils');
+var async = require('async');
 module.exports = function (cb) {
 
-	AD.module.permissions(path.join(__dirname, '..', 'setup', 'permissions'), cb);
+    // handle our common bootstrap setup instructions:
+        // - verify permissions are created
+        // - verify opsportal tool definitions are defined.
+    AD.module.bootstrap(__dirname, cb);
+
+
 
 	ADCore.queue.subscribe('opsportal.approval.create', function(message, data){
 
@@ -61,7 +67,8 @@ module.exports = function (cb) {
 					error:err,
 					data:paData,
 					module:'opstool-process-approval'
-				})
+				});
+				return null;
 			});
 		}
 
