@@ -7,11 +7,11 @@ module.exports = [
 
     { 
         key:'process.approval', 
-        permissions:'adcore.admin, adcore.developer, process.approval.tool.view', 
+        permissions:'process.approval.tool.view', 
         icon:'fa-check-square', 
         controller:'ProcessApproval',
-        label:'opp.toolProcessApproval',
-        context:'opsportal',
+        label:'Process Approval',
+        // context:'opsportal',
         isController:true, 
         options:{}, 
         version:'0' 
