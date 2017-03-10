@@ -14,9 +14,44 @@
 
 var limitScope = function(req, res, next){
 
-    Permissions.limitRouteToUserActionScope(req, res, next, {
-        field:'userID',
-        // userField:'guid',
+    // Permissions.limitRouteToUserActionScope(req, res, next, {
+    //     field:'userID',
+    //     // userField:'guid',
+    //     error:{
+    //         code:404,
+    //         message:'Not Found'
+    //     }
+    // });
+
+
+    Permissions.route.limitToActionScope(req, res, next, {
+
+        // the Action Key tied to this route:
+        actionKey:'process.approval.tool.view',
+
+        // the scope object used to figure out the users limit
+        object:{
+            key:'siteuser',  // sails.models[key]
+
+            field:'guid'  // if resource != object, then what is the fk in object
+        },
+
+        // the object returned by this route. 
+        // if not specified, we assume same as object above
+        resource:{
+            
+            field: 'userID', // the .field in resource that points to the fk in object
+
+
+            //
+            // eg: 
+            // if resource.userID -> object.id then:
+            // object.field: 'id',
+            // resource.field = 'userID'
+        },
+
+        // an error response if requested resource doesn't match 
+        // the user's scope.
         error:{
             code:404,
             message:'Not Found'
