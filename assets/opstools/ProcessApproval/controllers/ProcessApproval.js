@@ -54,10 +54,55 @@ steal(
 									console.error('!!! Dang.  something went wrong:', err);
 								})
 								.then(function (list) {
-									_this.controllers.PendingTransactions.setList(list);
-									_this.controllers.ApprovalWorkspace.setList(list);
-									_this.data.list = list;
-									console.log('... here is our list of pending transactions:', list);
+var origList = list.slice();;
+var list = list;
+$.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), function(data) {
+	var teams = [];
+	$.each(data.data, function(index, value) {
+		teams.push(value.IDMinistry);
+	});
+	if (teams.length > 0) {
+		var myItems = [];
+		$.each(list, function(index, value) {
+			if (value.objectData.menu.instanceRef == "activity_name") {
+				if (teams.indexOf(value.objectData.form.data.team) != -1) {
+					myItems.push(value);
+				}
+			} else if (value.objectData.menu.instanceRef == "caption") {
+				if (teams.indexOf(value.objectData.form.data.activity.team) != -1) {
+					myItems.push(value);
+				}
+			}
+		});
+		list.splice(0,list.length)
+		var newList = list.concat(myItems);
+		_this.controllers.PendingTransactions.setList(newList);
+		_this.controllers.ApprovalWorkspace.setList(newList);
+		_this.data.list = newList;
+	}
+
+	$.getJSON('/site/user/data?_='+(Math.random() * 1000000000), function(data) {
+		if (data.data.actions.indexOf("adcore.admin") != -1) {
+			$("#filterTeamData").prop("disabled", false);
+			$("#filterTeamData").css("display", "");
+			$("#filterTeamData").click(function() {
+				newList.splice(0,newList.length)
+				var oldList = newList.concat(origList);
+				_this.controllers.PendingTransactions.setList(oldList);
+				_this.controllers.ApprovalWorkspace.setList(oldList);
+				_this.data.list = oldList;
+				$("#filterTeamData").css("display", "none");
+			});	
+		}
+	});
+	
+}).error(function() {  
+	_this.controllers.PendingTransactions.setList(list);
+	_this.controllers.ApprovalWorkspace.setList(list);
+	_this.data.list = list;
+});
+
+
 								});
 
 							this.PARequest.on('stale', function (m, d) {
