@@ -31,6 +31,11 @@ module.exports = {
     objectData : { type: 'json' },
 
     updatedValues: { type: 'json' },
+    
+    uniqueKey: { 
+        type: 'string',
+        unique: true
+    },
 
     comments: {
     	collection:'pacomment',  // <-- all lowercase!
@@ -41,9 +46,21 @@ module.exports = {
 
 
   beforeUpdate: function(valuesToUpdate, cb) {
+    
+    // don't allow updates form these fields
+    var notUpdate = ['objectData', 'actionKey', 'userID', 'callback', 'uniqueKey', 'fromUser'];
 
-    // don't allow updates to these fields:
-    ['actionKey', 'userID', 'callback', 'objectData'].forEach(function(key){
+    // allow updates from users (fromUser) to the objectData
+    if (valuesToUpdate.hasOwnProperty('fromUser')) {
+        // we know it is the first one but just in case someone changes the array above in the future
+        var pos = notUpdate.indexOf('objectData');
+        if (pos > -1) {
+            // remove objectData from the notUpdate array so it can be updated
+            notUpdate.splice(pos, 1);
+        }
+    }
+
+    notUpdate.forEach(function(key){
       if (valuesToUpdate[key]) delete valuesToUpdate[key];  
     });
 
