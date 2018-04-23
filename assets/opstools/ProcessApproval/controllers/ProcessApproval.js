@@ -54,53 +54,53 @@ steal(
 									console.error('!!! Dang.  something went wrong:', err);
 								})
 								.then(function (list) {
-var origList = list.slice();;
-var list = list;
-$.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), function(data) {
-	var teams = [];
-	$.each(data.data, function(index, value) {
-		teams.push(value.IDMinistry);
-	});
-	if (teams.length > 0) {
-		var myItems = [];
-		$.each(list, function(index, value) {
-			if (value.objectData.menu.instanceRef == "activity_name") {
-				if (teams.indexOf(value.objectData.form.data.team) != -1) {
-					myItems.push(value);
-				}
-			} else if (value.objectData.menu.instanceRef == "caption") {
-				if (teams.indexOf(value.objectData.form.data.activity.team) != -1) {
-					myItems.push(value);
-				}
-			}
-		});
-		list.splice(0,list.length)
-		var newList = list.concat(myItems);
-		_this.controllers.PendingTransactions.setList(newList);
-		_this.controllers.ApprovalWorkspace.setList(newList);
-		_this.data.list = newList;
-	}
+									var origList = list.slice();;
+									var list = list;
+									$.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), function(data) {
+										var teams = [];
+										$.each(data.data, function(index, value) {
+											teams.push(value.IDMinistry);
+										});
+										if (teams.length > 0) {
+											var myItems = [];
+											$.each(list, function(index, value) {
+												if (value.objectData.menu.instanceRef == "activity_name") {
+													if (teams.indexOf(value.objectData.form.data.team) != -1) {
+														myItems.push(value);
+													}
+												} else if (value.objectData.menu.instanceRef == "caption") {
+													if (teams.indexOf(value.objectData.form.data.activity.team) != -1) {
+														myItems.push(value);
+													}
+												}
+											});
+											list.splice(0,list.length)
+											var newList = list.concat(myItems);
+											_this.controllers.PendingTransactions.setList(newList);
+											_this.controllers.ApprovalWorkspace.setList(newList);
+											_this.data.list = newList;
+										}
 
-	$.getJSON('/site/user/data?_='+(Math.random() * 1000000000), function(data) {
-		if (data.data.actions.indexOf("adcore.admin") != -1) {
-			$("#filterTeamData").prop("disabled", false);
-			$("#filterTeamData").css("display", "");
-			$("#filterTeamData").click(function() {
-				newList.splice(0,newList.length)
-				var oldList = newList.concat(origList);
-				_this.controllers.PendingTransactions.setList(oldList);
-				_this.controllers.ApprovalWorkspace.setList(oldList);
-				_this.data.list = oldList;
-				$("#filterTeamData").css("display", "none");
-			});	
-		}
-	});
-	
-}).error(function() {  
-	_this.controllers.PendingTransactions.setList(list);
-	_this.controllers.ApprovalWorkspace.setList(list);
-	_this.data.list = list;
-});
+										$.getJSON('/site/user/data?_='+(Math.random() * 1000000000), function(data) {
+											if (data.data.actions.indexOf("adcore.admin") != -1) {
+												$("#filterTeamData").prop("disabled", false);
+												$("#filterTeamData").css("display", "");
+												$("#filterTeamData").click(function() {
+													newList.splice(0,newList.length)
+													var oldList = newList.concat(origList);
+													_this.controllers.PendingTransactions.setList(oldList);
+													_this.controllers.ApprovalWorkspace.setList(oldList);
+													_this.data.list = oldList;
+													$("#filterTeamData").css("display", "none");
+												});	
+											}
+										});
+
+									}).error(function() {  
+										_this.controllers.PendingTransactions.setList(list);
+										_this.controllers.ApprovalWorkspace.setList(list);
+										_this.data.list = list;
+									});
 
 
 								});
@@ -109,7 +109,9 @@ $.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), funct
 
 								// we only want pending transactions:
 								var condition = {
-									status: "pending"
+									where: {
+										status: "pending"
+									}
 								};
 
 
@@ -129,7 +131,7 @@ $.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), funct
 									}
 								})
 								if (currentIDs.length > 0) {
-									condition.id = {
+									condition.where.id = {
 										'!': currentIDs
 									};
 								};
@@ -146,19 +148,26 @@ $.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), funct
 											var index = 0;
 											var needPush = true; // if not found in the nav we need to push new item to the end
 											// look for the item and update its data or add to the end of the list
-											_this.data.list.forEach(function (item) {
-												var itemId = item.getID();
-												if (d.paRequestId == itemId) {
-													item = listNew[0];
-													needPush = false; // no need to add it to the end
-													// data is up to date now tell the UI to update (this is needed when we are updating an exisiting nav item)
-													_this.controllers.PendingTransactions.setList(_this.data.list);
-													_this.controllers.ApprovalWorkspace.setList(_this.data.list);
-												} else if (index +1  == _this.data.list.length && needPush) {
-													_this.data.list.push(listNew[0]); // this was a status change as well so lets put it back in the list
-												}
-												index++;
-											});
+											if (_this.data.list.length) {
+												_this.data.list.forEach(function (item) {
+													var itemId = item.getID();
+													if (d.paRequestId == itemId) {
+														item = listNew[0];
+														needPush = false; // no need to add it to the end
+														// data is up to date now tell the UI to update (this is needed when we are updating an exisiting nav item)
+														_this.controllers.PendingTransactions.setList(_this.data.list);
+														_this.controllers.ApprovalWorkspace.setList(_this.data.list);
+													} else if (index +1  == _this.data.list.length && needPush) {
+														_this.data.list.push(listNew[0]); // this was a status change as well so lets put it back in the list
+													}
+													index++;
+												});
+											} else {
+												// the list may have been emptied out so we can push the new item in if so
+												listNew.forEach(function (item) {
+													_this.data.list.push(item);
+												})
+											}
 										} else {
 											// otherwise just push in the new items
 											listNew.forEach(function (item) {
