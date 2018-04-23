@@ -46,6 +46,7 @@ steal(
 
 						loadListData: function () {
 							var _this = this;
+							var origList;
 
 							// now load our data from the server:
 							this.PARequest = AD.Model.get('opstools.ProcessApproval.PARequest');
@@ -54,7 +55,7 @@ steal(
 									console.error('!!! Dang.  something went wrong:', err);
 								})
 								.then(function (list) {
-									var origList = list.slice();;
+									origList = list.slice();;
 									var list = list;
 									$.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), function(data) {
 										var teams = [];
@@ -115,26 +116,19 @@ steal(
 								};
 
 
-								// ignore any existing transactions in our list unless the item was updated:
-								var currentIDs = [];
-								_this.data.list.forEach(function (item) {
-									var itemId = item.getID();
-									// check to see if there was an updated item id passed
-									if (d.paRequestId) {
-										// if id was passed and it does not match the current id push id to ignore array
-										if (d.paRequestId != itemId) {
-											currentIDs.push(item.getID());
-										}
-									} else {
+								if (d.paRequestId) {
+									condition.where.id = d.paRequestId;
+								} else {
+									// ignore any existing transactions in our list unless the item was updated:
+									var currentIDs = [];
+									origList.forEach(function (item) {
 										// if no updated item id passed just ignore all
 										currentIDs.push(item.getID());
-									}
-								})
-								if (currentIDs.length > 0) {
+									})
 									condition.where.id = {
 										'!': currentIDs
 									};
-								};
+								} 
 
 								// console.log('... condition:', condition);
 
