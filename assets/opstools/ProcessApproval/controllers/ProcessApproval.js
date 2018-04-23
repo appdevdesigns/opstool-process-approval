@@ -113,10 +113,20 @@ $.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), funct
 								};
 
 
-								// ignore any existing transactions in our list:
+								// ignore any existing transactions in our list unless the item was updated:
 								var currentIDs = [];
 								_this.data.list.forEach(function (item) {
-									currentIDs.push(item.getID());
+									var itemId = item.getID();
+									// check to see if there was an updated item id passed
+									if (d.paRequestId) {
+										// if id was passed and it does not match the current id push id to ignore array
+										if (d.paRequestId != itemId) {
+											currentIDs.push(item.getID());
+										}
+									} else {
+										// if no updated item id passed just ignore all
+										currentIDs.push(item.getID());
+									}
 								})
 								if (currentIDs.length > 0) {
 									condition.id = {
@@ -131,11 +141,31 @@ $.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), funct
 										console.error('!!! Dang.  something went wrong:', err);
 									})
 									.then(function (listNew) {
-										listNew.forEach(function (item) {
-											_this.data.list.push(item);
-										})
+										// if we have passed an updated item id
+										if (d.paRequestId) {
+											var index = 0;
+											var needPush = true; // if not found in the nav we need to push new item to the end
+											// look for the item and update its data or add to the end of the list
+											_this.data.list.forEach(function (item) {
+												var itemId = item.getID();
+												if (d.paRequestId == itemId) {
+													item = listNew[0];
+													needPush = false; // no need to add it to the end
+													// data is up to date now tell the UI to update (this is needed when we are updating an exisiting nav item)
+													_this.controllers.PendingTransactions.setList(_this.data.list);
+													_this.controllers.ApprovalWorkspace.setList(_this.data.list);
+												} else if (index +1  == _this.data.list.length && needPush) {
+													_this.data.list.push(listNew[0]); // this was a status change as well so lets put it back in the list
+												}
+												index++;
+											});
+										} else {
+											// otherwise just push in the new items
+											listNew.forEach(function (item) {
+												_this.data.list.push(item);
+											})
+										}
 									})
-
 							})
 						},
 
