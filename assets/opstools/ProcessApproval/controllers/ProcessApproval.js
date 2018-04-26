@@ -47,6 +47,7 @@ steal(
 						loadListData: function () {
 							var _this = this;
 							var origList;
+							var teams = [];
 
 							// now load our data from the server:
 							this.PARequest = AD.Model.get('opstools.ProcessApproval.PARequest');
@@ -58,7 +59,7 @@ steal(
 									origList = list.slice();;
 									var list = list;
 									$.getJSON('/fcf_activities/userteam/find?_='+(Math.random() * 1000000000), function(data) {
-										var teams = [];
+										// var teams = [];
 										$.each(data.data, function(index, value) {
 											teams.push(value.IDMinistry);
 										});
@@ -93,6 +94,7 @@ steal(
 													_this.controllers.ApprovalWorkspace.setList(oldList);
 													_this.data.list = oldList;
 													$("#filterTeamData").css("display", "none");
+													teams = [];
 												});	
 											}
 										});
@@ -152,27 +154,49 @@ steal(
 														_this.controllers.PendingTransactions.setList(_this.data.list);
 														_this.controllers.ApprovalWorkspace.setList(_this.data.list);
 													} else if (index +1  == _this.data.list.length && needPush) {
-														_this.data.list.push(listNew[0]); // this was a status change as well so lets put it back in the list
+														if (_this.isMyTeam(listNew[0], teams)) {
+															_this.data.list.push(listNew[0]); // this was a status change as well so lets put it back in the list
+														}
 													}
 													index++;
 												});
 											} else {
 												// the list may have been emptied out so we can push the new item in if so
 												listNew.forEach(function (item) {
-													_this.data.list.push(item);
+													if (_this.isMyTeam(item, teams)) {
+														_this.data.list.push(item);
+													}
 												})
 											}
 										} else {
 											// otherwise just push in the new items
 											listNew.forEach(function (item) {
-												_this.data.list.push(item);
+												if (_this.isMyTeam(item, teams)) {
+													_this.data.list.push(item);
+												}
 											})
 										}
 									})
 							})
 						},
-
-
+						
+						isMyTeam: function (item, teams) {
+							if (teams.length > 0) {
+								if (item.objectData.menu.instanceRef == "activity_name") {
+									if (teams.indexOf(item.objectData.form.data.team) != -1) {
+										return true;
+									}
+								} else if (item.objectData.menu.instanceRef == "caption") {
+									if (teams.indexOf(item.objectData.form.data.activity.team) != -1) {
+										return true;
+									}
+								} else {
+									return false;
+								}
+							} else {
+								return true; // if we don't care about teams just say yes
+							}
+						},
 
 						initControllers: function () {
 
