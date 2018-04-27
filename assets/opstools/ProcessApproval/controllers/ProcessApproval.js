@@ -123,7 +123,7 @@ steal(
 								} else {
 									// ignore any existing transactions in our list unless the item was updated:
 									var currentIDs = [];
-									origList.forEach(function (item) {
+									_this.data.list.forEach(function (item) {
 										// if no updated item id passed just ignore all
 										currentIDs.push(item.getID());
 									})
