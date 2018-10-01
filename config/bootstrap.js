@@ -55,11 +55,10 @@ module.exports = function (cb) {
 			paData.callback = data.callback.message;
             paData.uniqueKey = data.callback.message + "." + data.callback.reference.id; // create unique key
             if (data.status == "approved" || data.status == "ready") {
-                paData.satatus = "approved";
+                paData.status = "approved";
             } else {
                 paData.status = 'pending';
             }
-
             // First look to see if the record already exisits
             PARequest.findOne({ uniqueKey: paData.uniqueKey })
             .then(function(existingRecord) {
