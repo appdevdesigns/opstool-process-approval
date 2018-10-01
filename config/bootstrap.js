@@ -54,7 +54,11 @@ module.exports = function (cb) {
 			paData.userID = data.permission.userID;
 			paData.callback = data.callback.message;
             paData.uniqueKey = data.callback.message + "." + data.callback.reference.id; // create unique key
-            paData.status = 'pending'; // always set status to pending to get item back in process approval queue ?? are there any times where we don't want that (date change, add or remove of tagged people)
+            if (data.status == "approved" || data.status == "ready") {
+                paData.satatus = "approved";
+            } else {
+                paData.status = 'pending';
+            }
 
             // First look to see if the record already exisits
             PARequest.findOne({ uniqueKey: paData.uniqueKey })
