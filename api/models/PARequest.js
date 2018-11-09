@@ -24,6 +24,7 @@ module.exports = {
         'pending',      // waiting for an admin to approve the request
         'requesting',   // requesting more information (comments)
         'approved',     // Admin has approved the request
+        'ready',        // Adming has translated and approved in one step
         'rejected'      // Admin has rejected the request
       ] 
     },
