@@ -81,7 +81,7 @@ steal(
 							}
 
 							try {
-
+								console.log(templateInfo.view);
 								// $el.html(can.view(templateInfo.view, data));
 								// AD.lang.label.translate($el);
 								can.view(templateInfo.view, data, function(frag){
@@ -207,6 +207,43 @@ steal(
 							this.buttonsDisable();
 
 							var status = $el.attr('pa-status');
+							
+							var comment = {
+								fixPhoto: false,
+								fixCaption: false,
+								fixLocation: false,
+								fixDate: false,
+								customMessage: ""
+							};
+							if (status == "rejected") {
+								console.log(this);
+								
+								if (document.getElementById('rejectPhoto').checked) {
+									comment.fixPhoto = true;
+								}
+								if (document.getElementById('rejectLocation').checked) {
+									comment.fixLocation = true;
+								}
+								if (document.getElementById('rejectCaption').checked) {
+									comment.fixCaption = true;
+								}
+								if (document.getElementById('rejectDate').checked) {
+									comment.fixDate = true;
+								}
+								if (document.getElementById('rejectCustom').value != "") {
+									comment.customMessage = document.getElementById('rejectCustom').value.trim();
+								}
+								
+								if (comment.fixPhoto || comment.fixLocation || comment.fixCaption || comment.fixDate) {
+									this.transaction.attr('comment', JSON.stringify(comment));
+									$('#denyPhoto').modal("hide");
+								} else {
+									alert("Please check one of the boxes above.");
+									_this.buttons[status].ready();
+									_this.buttonsEnable();
+									return false;
+								}
+							}
 
 							this.buttons[status].busy();
 
@@ -216,8 +253,8 @@ steal(
 							// so we don't send this info back, which is ok, since the server prevents us from updating
 							// this field anyway.
 							this.transaction.attr('objectData', {}); // don't send this back
-							this.transaction.attr('status', status);
-							this.transaction.attr('updatedValues', newValues);
+							this.transaction.attr('status', status);							
+							// this.transaction.attr('updatedValues', newValues);
 							this.transaction.save()
 								.fail(function (err) {
 									console.error(err);

@@ -37,6 +37,8 @@ module.exports = {
         type: 'string',
         unique: true
     },
+    
+    comment : { type: 'text' },
 
     comments: {
     	collection:'pacomment',  // <-- all lowercase!
@@ -113,6 +115,9 @@ module.exports = {
 
       // 3) add in any changed data submitted from the UI:
       returnData.data = updatedRecord.updatedValues;
+      
+      // add in the rejection comment
+      returnData.comment = updatedRecord.comment;
 
       // 4) add display menu info :
       returnData.menu = {

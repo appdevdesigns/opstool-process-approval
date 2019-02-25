@@ -125,6 +125,113 @@ module.exports = function (cb) {
 		}
 
 	});
+    
+    ADCore.queue.subscribe('opsportal.approval.update', function(message, data){
+
+        var requiredProperties = ['permission.actionKey', 'permission.userID', 'callback.message'];
+        var allPropertiesFound = true;
+        requiredProperties.forEach(function(prop){
+
+            /// NOTE: once Sails uses lodash v3.10.1, we can simply do this:
+            /// allPropertiesFound = allPropertiesFound && _.has(data, prop);
+
+            /// currently Sails uses v2.4.2 so we do this for now:
+            var props = prop.split('.');
+            var currData = data;
+
+            while(props.length>0) {
+                var currentProp = props.shift();
+                allPropertiesFound = allPropertiesFound  && _.has(currData, currentProp);
+                if (currData) currData = currData[currentProp];
+            }
+
+        });
+
+        if (!allPropertiesFound) {
+
+            // data provided not in valid format
+
+        } else {
+
+            // reformat the incoming data into a PARequest format:
+            var paData = {};
+            paData.objectData = data;
+            paData.actionKey = data.permission.actionKey;
+            paData.userID = data.permission.userID;
+            paData.callback = data.callback.message;
+            paData.uniqueKey = data.callback.message + "." + data.callback.reference.id; // create unique key
+            if (data.status == "approved" || data.status == "ready") {
+                paData.status = data.status;
+            } else {
+                paData.status = 'pending';
+            }
+            // First look to see if the record already exisits
+            PARequest.findOne({ uniqueKey: paData.uniqueKey })
+            .then(function(existingRecord) {
+                
+                // if record does not exist we need to create it
+                if (typeof existingRecord == "undefined") {
+                    
+                    PARequest.create(paData)
+                    .then(function(newEntry){
+
+                        // tell all connected sockets that their info is "stale"
+                        sails.sockets.broadcast('sails_model_create_parequest', 'parequest', { verb:'stale'});
+                        return null;
+                    })
+                    .catch(function(err){
+                        ADCore.error.log('unable to create this PARequest entry', {
+                            error:err,
+                            data:paData,
+                            module:'opstool-process-approval'
+                        });
+                        return null;
+                    });
+
+                } else {
+
+                    // if record exists we need to format it into an update of a PARequest
+                    var newRecord = existingRecord;
+                    
+                    newRecord.objectData = paData.objectData;
+                    newRecord.status = paData.status; 
+                    newRecord.updatedValues = ""; // if this item was previously updated in the approval queue now we will reset for another round
+                    newRecord.fromUser = true; // this is a flag to allow the model to update the objectData field
+                    
+                    PARequest.update({ uniqueKey: paData.uniqueKey }, newRecord)
+                    .then(function(newEntry){
+
+                        // tell all connected sockets that their info is "stale"
+                        sails.sockets.broadcast('sails_model_create_parequest', 'parequest', { verb:'stale', paRequestId: newRecord.id } );
+                        return null;
+                    })
+                    .catch(function(err){
+                        ADCore.error.log('unable to update this PARequest entry', {
+                            error:err,
+                            data:newRecord,
+                            module:'opstool-process-approval'
+                        });
+                        return null;
+                    });
+                    
+                }
+
+            })
+            .catch(function(err){
+
+                ADCore.error.log('unable to find this PARequest entry', {
+                    error:err,
+                    data:paData,
+                    module:'opstool-process-approval'
+                });
+                return null;
+
+            });
+
+        }
+
+    });
+
 
 
 	// DEVELOP MODE: keep some new Approval Requests coming in:

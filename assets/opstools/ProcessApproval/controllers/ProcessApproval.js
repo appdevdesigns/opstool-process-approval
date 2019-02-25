@@ -127,9 +127,11 @@ steal(
 										// if no updated item id passed just ignore all
 										currentIDs.push(item.getID());
 									})
-									condition.where.id = {
-										'!': currentIDs
-									};
+									if (currentIDs.length > 0) {
+										condition.where.id = {
+											'!': currentIDs
+										};
+									}
 								} 
 
 								// console.log('... condition:', condition);
@@ -242,7 +244,7 @@ steal(
 
 							this._super(data);
 
-							this.controllers.PendingTransactions.resize(data.height);
+							this.controllers.PendingTransactions.resize(data.height - 20);
 
 						}
 
