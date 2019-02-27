@@ -31,6 +31,25 @@ steal(
 
 							this.data = {};
 							this.data.listTransactions = null;
+							
+							// gather which person the user is & pass off to Controllers
+							AD.comm.service.get({ url: '/fcf_activities/activityreport/whoami' })
+							.fail(function(err) {
+								console.error('!!!! FCFActivities: error getting /whoami', err);
+							})
+							.then(function(data) {
+
+								if (data) {
+
+									self.whoami = data;
+
+								} else {
+
+									console.warn('... FCFActivities: /whoami did not find an entry!');
+								}
+
+
+							});
 
 							this.initDOM();
 
@@ -213,7 +232,8 @@ steal(
 								fixCaption: false,
 								fixLocation: false,
 								fixDate: false,
-								customMessage: ""
+								customMessage: "",
+								deniedBy: {}
 							};
 							if (status == "rejected") {
 								console.log(this);
@@ -233,6 +253,8 @@ steal(
 								if (document.getElementById('rejectCustom').value != "") {
 									comment.customMessage = document.getElementById('rejectCustom').value.trim();
 								}
+								
+								comment.deniedBy = self.whoami;
 								
 								if (comment.fixPhoto || comment.fixLocation || comment.fixCaption || comment.fixDate) {
 									this.transaction.attr('comment', JSON.stringify(comment));
