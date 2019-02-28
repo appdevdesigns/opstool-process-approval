@@ -148,7 +148,7 @@
                               <div class="op-container op-block nomargintop pa-action-buttons">
                                   <button class="btn btn-success float-right offset-30 pa-approvalform-submit" pa-status="approved" ><i class="fa"></i><span app-label-key="parequest.accept">Accept</span></button>
                                   <button class="btn btn-info  float-right offset-15 pa-approvalform-submit mockup" pa-status="requesting" ><span app-label-key="parequest.request">Request</span></button>
-                                  <button class="btn btn-danger float-right offset-15" data-toggle="modal" data-target="#denyPhoto" ><i class="fa fa-hand-paper-o"></i> <span app-label-key="parequest.deny">Deny</span></button>
+                                  <button class="btn btn-danger float-right offset-15" onclick="if ( '[[- transaction.objectData.menu.action.key ]]' == 'fcf.activityapproval.newActivity') { $('#approvalFormSubmit').trigger('click'); } else { $('#denyPhoto').modal('show') }"><i class="fa fa-hand-paper-o"></i> <span app-label-key="parequest.deny">Deny</span></button>
                               </div>    
                                              
                           </div>
@@ -187,7 +187,7 @@
                                     <textarea id="rejectCustom" class="form-control" rows="3" placeholder="Tell your volunteer why this activity photo was denied."></textarea>
                                     <div style="margin-top: 15px;">
                                       <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
-                                      <button style="float: right;" type="button" pa-status="rejected" class="btn btn-danger pa-approvalform-submit">Deny</button>
+                                      <button id="approvalFormSubmit" style="float: right;" type="button" pa-status="rejected" class="btn btn-danger pa-approvalform-submit">Deny</button>
                                     </div>
                                   </div>
                                 </div>

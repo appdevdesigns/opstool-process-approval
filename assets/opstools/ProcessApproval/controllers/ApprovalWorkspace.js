@@ -235,7 +235,7 @@ steal(
 								customMessage: "",
 								deniedBy: {}
 							};
-							if (status == "rejected") {
+							if (status == "rejected" && this.transaction.callback == "fcf.activities.image") {
 								console.log(this);
 								
 								if (document.getElementById('rejectPhoto').checked) {
