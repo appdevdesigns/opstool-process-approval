@@ -6,13 +6,13 @@
 
       <!-- Widget -->  
 
-            <div class='col-xs-2 op-container hris-user-widget'>
+            <div class='col-sm-3 op-container hris-user-widget'>
                 <!--Left bar-->
                 <div  class="op-container op-widget sticky pa-pendingtransactions" >
                     <div class="op-widget-masthead">
                         <h3><strong><span app-label-key="parequest.pendingTransactions">Pending Transactions</span></strong></h3>
                         <p><span app-label-key="parequest.pendingTransactionsInstructions">Choose one of the pending transactions to review</span></p>
-			<button disabled id="filterTeamData" class="btn btn-primary btn-block" style="background-color: #1f6b8d !important; display: none;">Show all items</button>
+			            <button disabled id="filterTeamData" class="btn btn-primary btn-block" style="background-color: #1f6b8d !important; display: none;">Show all items</button>
                     </div>        
                     <div class="op-widget-body" style="overflow-y: auto;">
                       <ul class="op-list">
@@ -30,8 +30,12 @@
                           items.forEach(function(item) { 
 
                             var menuData = item.objectData.menu; 
+                            var formData = item.objectData.form; 
                             if (!menuData) {
                               menuData = item.objectData.objectData.menu;
+                            }
+                            if (!formData) {
+                              formData = item.objectData.objectData.form;
                             }
 
                             var itemName = item.objectData.form.data[menuData.instanceRef] || menuData.instanceRef;
@@ -43,12 +47,14 @@
 
                           -->
                             <li mockup-show="new-activity" class="op-container [[= active ]]" parequest-id="[[= item.getID() ]]" obj-embed="item" >
-                              <span class="icon"><i class="fa [[= menuData.icon ]] fa-fw"></i></span>
-                              <div style="display: inline-block; vertical-align:top;"><strong>[[- AD.lang.label.getLabelSpan(menuData.action.key) ]]</strong><br>
-                                        "[[= itemName ]]" <br>
-                                        [[- AD.lang.label.getLabelSpan('parequest.by') ]] "[[= menuData.createdBy ]]"<br>
-                                        [[- AD.lang.label.getLabelSpan('parequest.date') ]]: [[= menuData.date ]]
-                              </div>
+                              
+                                <img onerror="this.style.display = 'none'; if (document.getElementById('activity-[[= item.getID() ]]')) document.getElementById('activity-[[= item.getID() ]]').style.display = '';" style="object-fit: cover; border-radius: 5px; margin-right: 10px; float: left;" width="80" height="80" src="[[= formData.data.image ]]"/>
+                                <span class="icon"><i class="fa [[= menuData.icon ]] fa-fw"></i></span> <strong>[[- AD.lang.label.getLabelSpan(menuData.action.key) ]]</strong><br/>
+                                <span style="display: none;" id="activity-[[= item.getID() ]]">[[= itemName ]]<br/></span>
+                                <span app-label-key="parequest.by" >Requested by:</span> [[= menuData.createdBy ]]<br/>
+                                <span app-label-key="parequest.date" >Requested on:</span> [[= menuData.date ]]<br/>
+                                <div class="clear"></div>
+                                    
                             </li>
                           <!--
                           });
@@ -73,11 +79,11 @@
             </div>
 
             <!-- Main stage area -->
-            <div class='col-xs-10 op-container pa-approvalworkspace'>
+            <div class='col-sm-9 op-container pa-approvalworkspace'>
 
                 <!-- Instructions Panel -->
                 <div class="mockup-display new-activity opsportal-content-area pa-instructionsPanel">
-                       <p><span app-label-key="parequest.instructions">Select an entry on the right to begin editing.</span> </p>            
+                       <p><span app-label-key="parequest.instructions">Select an entry on the left to begin editing.</span> </p>            
                 </div>
                 
                 <!-- AllDone Panel -->
@@ -142,10 +148,52 @@
                               <div class="op-container op-block nomargintop pa-action-buttons">
                                   <button class="btn btn-success float-right offset-30 pa-approvalform-submit" pa-status="approved" ><i class="fa"></i><span app-label-key="parequest.accept">Accept</span></button>
                                   <button class="btn btn-info  float-right offset-15 pa-approvalform-submit mockup" pa-status="requesting" ><span app-label-key="parequest.request">Request</span></button>
-                                  <button class="btn btn-warning float-right  offset-15 pa-approvalform-submit" pa-status="rejected"><i class="fa fa-hand-paper-o"></i><span app-label-key="parequest.deny">Deny</span></button>
+                                  <button class="btn btn-danger float-right offset-15" onclick="if ( '[[- transaction.objectData.menu.action.key ]]' == 'fcf.activityapproval.newActivity') { $('#approvalFormSubmit').trigger('click'); } else { $('#denyPhoto').modal('show') }"><i class="fa fa-hand-paper-o"></i> <span app-label-key="parequest.deny">Deny</span></button>
                               </div>    
                                              
                           </div>
+                          
+                            <div class="modal fade fcf-theme-modal" id="denyPhoto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content modal-add-activity">
+                                  <div class="modal-body inner-add-activity">
+                                    <h3 style="color: black; margin-top: 0;">
+                                      Please provide a reason for denying this photo.
+                                    </h3>
+                                    <p>
+                                        Check at least one box.
+                                    </p>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="rejectPhoto" /> Photo is not appropriate. Please use a different photo.
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="rejectCaption" /> Caption needs to be reworded to include both WHAT you are doing and HOW it impacts Thai people.
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="rejectDate" /> Date of the photo is not within the current reporting period. Please correct.
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="rejectLocation" /> Location is to general. Please provide complete details of the location: Name, Tambon and Ampoe.
+                                        </label>
+                                    </div>
+                                    <label style="margin-top: 10px;">Optional custom message:</label><br/>
+                                    <textarea id="rejectCustom" class="form-control" rows="3" placeholder="Tell your volunteer why this activity photo was denied."></textarea>
+                                    <div style="margin-top: 15px;">
+                                      <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                                      <button id="approvalFormSubmit" style="float: right;" type="button" pa-status="rejected" class="btn btn-danger pa-approvalform-submit">Deny</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                           
                           <div class="col-lg-3">
                               <div class="op-container op-block-border off-top35 pa-approvalForm-relatedTemplate">
@@ -183,121 +231,118 @@
                 <!--/Form Activity Area-->
                 <!--Image Area-->
                 <div id="apprv-image" class="mockup-display new-image opsportal-content-area mockup" style="display:none">
-                      <div class="op-container">
-                          <div class="workspace col-lg-9 off-botm20">
+                    <div class="op-container">
+                        <div class="workspace col-lg-9 off-botm20">
                             <h4>New Image</h4> 
-                              <div class="op-container op-block-border off-botm20">
-                
-                                 <!--Image Name-->
-                                   <div id="opsportal-activityName" class="off-botm20">
-                                       <div class="form-group">
-                                          <label class="lbl-title">Image</label>
-                                          <div class="op-container off-botm20">
-                                            <img class="img-responsive" src="/images/opsportal/love-map.jpg" alt="R,desponsive image" >                              
-                                          </div>
+                            <div class="row">
+                                <div class="op-container op-block-border off-botm20">
+
+                                    <!--Image Name-->
+                                    <div id="opsportal-activityName" class="off-botm20">
+                                        <div class="form-group">
+                                            <label class="lbl-title">Image</label>
+                                            <div class="op-container off-botm20">
+                                                <img class="img-responsive" src="" alt="Responsive image" >                              
+                                            </div>
                                         </div>
                                         <div class="form-horizontal">
-                                         <!--Caption--> 
-                                         <div class="form-group">
-                                            <label class="col-sm-1 nopadL control-label lbl-title">Caption:</label>
-                                            <div class="col-sm-11">
-                                              <input type="text" class="form-control" id="caption">
-                                            </div>
-                                         </div>
-                                         <!--/Caption-->
-                                         <!--Date-->
-                                         <div class="row">
-                                           <div class="col-sm-12">
-                                              <label class="col-sm-1 control-label nopadL lbl-title">Date:</label>
-                                              <div class="col-sm-11">
-                                                <div class="row">
-                                                  <div class="col-sm-3">
-                                                    <input type="date" class="col-xs-2 form-control" id="caption">
-                                                  </div>
+                                            <!--Caption--> 
+                                            <div class="form-group">
+                                                <label class="col-sm-1 nopadL control-label lbl-title">Caption:</label>
+                                                <div class="col-sm-11">
+                                                    <input type="text" class="form-control" id="caption">
                                                 </div>
-                                              </div>
-                                           </div>
-                                         </div>
-                                         <!--/Date-->
-                                       </div>
-                                  </div> 
-                                  <!--/Image Name-->
-                                  <!--People in Photo-->                  
-                                  <div id="opsportal-description">
-                                    <label class="lbl-title">People in photo:</label>
-                                      <div class="op-container op-block-border off-botm20">
-                                        <div class="row" style="margin:0; padding-left: 10px;">
-                                          <!--List of people with closed button-->
-                                          <div class="alert people alert-dismissible">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <strong>Person 1</strong>
-                                          </div>
-                                          <div class="alert people alert-dismissible">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <strong>Person 2</strong>
-                                          </div>
-                                          <div class="alert people alert-dismissible">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <strong>Person 3</strong>
-                                          </div>
-                                          <div class="alert people alert-dismissible">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <strong>Person 4</strong>
-                                          </div>                                                                                      
-                                          <!--/End here-->
+                                            </div>
+                                            <!--/Caption-->
+                                            <!--Date-->
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label class="col-sm-1 control-label nopadL lbl-title">Date:</label>
+                                                    <div class="col-sm-11">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <input type="date" class="col-xs-2 form-control" id="caption">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/Date-->
                                         </div>
-                                      </div>
-                                  </div>
-                                  <!--/People in Photo-->                  
-                              </div>
-                              <h4>Comments:</h4>
-                              <div class="op-container op-block-border off-botm10">
-                                  <p>previous comment 1</p>
-                                  <p>previous comment 2</p>
-                                  <p>previous comment 3</p>
-                              </div>
-                            <textarea class="form-control" rows="5">Admin Comments</textarea>
-                              <!--Action Buttons-->
-                              <div class="op-container op-block nomargintop pa-action-buttons">
-                                  <button class="btn btn-success float-right" type="submit">Accept</button>
-                                  <button class="btn btn-info  float-right offset-15" type="submit">Request</button>
-                                  <button class="btn btn-warning float-right  offset-15" type="submit"><i class="fa fa-hand-paper-o"></i>Deny</button>
-                              </div>    
-                              <!--/Action Buttons-->                
-                          </div>
-                          <!--Submitted By Area-->
-                          <div id="submittedby" class="col-lg-3">
-                              <div class="op-container op-block-border">
-                                  <h4>Submitted By:</h4>
-                                  <!--Avatar & Team-->
-                                  <div class="row op-container">
-                                    <div class="col-xs-6 col-sm-3 col-lg-6 nopadR">
-                                          <img class="img-responsive" src="/images/opsportal/default-avatar.png" alt="Responsive image" >
-                                      </div>
-                                      <div class="col-xs-6 col-sm-9 col-lg-6 nopadR">
-                                           <h2 class="nomargintop">Nick Fury</h2>
-                                           <p>Team(s):</p>
-                                           <p>team a</p>
-                                           <p>team b</p>
-                                           <p>team c</p>
-                                      </div>                        
-                                  </div>
-                                  <!--/Avatar & Team-->
-                                  <div class="op-container">
-                                    <h4 class="off-botm20">Created On: 12 Dec 2015</h4>
-                                      <div class="op-container off-botm20">
-                                          <label class="lbl-title"><strong>Under Team:</strong></label>
-                                          <p><span><strong>Team Name</strong></span><br>team description can be longer than you might think here.</p>
-                                      </div>
-                                      <div class="op-container">
-                                          <label class="lbl-title"><strong>Under Project:</strong></label>
-                                          <p><span><strong>Project Name</strong></span><br>project description can be longer than you might think here.</p>
-                                      </div>                        
-                                  </div>
-                              </div>       
-                          </div>
-                          <!--/Submitted By Area-->    
-                      </div>    
+                                    </div> 
+                                    <!--/Image Name-->
+                                    <!--People in Photo-->                  
+                                    <div id="opsportal-description">
+                                        <label class="lbl-title">People in photo:</label>
+                                        <div class="op-container op-block-border off-botm20">
+                                            <div class="row" style="margin:0; padding-left: 10px;">
+                                                <!--List of people with closed button-->
+                                                <div class="alert people alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <strong>Person 1</strong>
+                                                </div>
+                                                <div class="alert people alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <strong>Person 2</strong>
+                                                </div>
+                                                <div class="alert people alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <strong>Person 3</strong>
+                                                </div>
+                                                <div class="alert people alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <strong>Person 4</strong>
+                                                </div>                                                                                      
+                                                <!--/End here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/People in Photo-->                  
+                                </div>
+                                <h4>Comments:</h4>
+                                <textarea class="form-control" rows="5">Admin Comments</textarea>
+                                <!--Action Buttons-->
+                                <div class="op-container op-block nomargintop pa-action-buttons">
+                                    <button class="btn btn-success float-right" type="submit">Accept</button>
+                                    <button class="btn btn-info  float-right offset-15" type="submit">Request</button>
+                                    <button class="btn btn-warning float-right  offset-15" type="submit"><i class="fa fa-hand-paper-o"></i>Deny</button>
+                                </div>    
+                                <!--/Action Buttons-->                
+                            </div>
+                            <!--Submitted By Area-->
+                            <div id="submittedby" class="col-lg-3">
+                                <div class="op-container op-block-border">
+                                    <h4>Submitted By:</h4>
+                                    <!--Avatar & Team-->
+                                    <div class="row op-container">
+                                        <div class="col-xs-6 col-sm-3 col-lg-6 nopadR">
+                                            <img class="img-responsive" src="/images/opsportal/default-avatar.png" alt="Responsive image" >
+                                        </div>
+                                        <div class="col-xs-6 col-sm-9 col-lg-6 nopadR">
+                                            <h2 class="nomargintop">Nick Fury</h2>
+                                            <p>Team(s):</p>
+                                            <p>team a</p>
+                                            <p>team b</p>
+                                            <p>team c</p>
+                                        </div>                        
+                                    </div>
+                                    <!--/Avatar & Team-->
+                                    <div class="op-container">
+                                        <h4 class="off-botm20">Created On: 12 Dec 2015</h4>
+                                        <div class="op-container off-botm20">
+                                            <label class="lbl-title"><strong>Under Team:</strong></label>
+                                            <p><span><strong>Team Name</strong></span><br>team description can be longer than you might think here.</p>
+                                        </div>
+                                        <div class="op-container">
+                                            <label class="lbl-title"><strong>Under Project:</strong></label>
+                                            <p><span><strong>Project Name</strong></span><br>project description can be longer than you might think here.</p>
+                                        </div>                        
+                                    </div>
+                                </div>       
+                            </div>
+                            <!--/Submitted By Area--> 
+                        </div>   
+                    </div>    
                 </div>
                 <!--/Image Area-->
                 
