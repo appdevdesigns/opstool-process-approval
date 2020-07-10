@@ -157,11 +157,6 @@ steal(
 
 							// clear the form
 							this.dom.approvalForm.html();
-
-
-
-
-
 							this.showDOM('instructions');
 						},
                         
@@ -304,7 +299,7 @@ steal(
                             var valueString = $('#peopleTags').attr('people-list');
                             var valueList = valueString.split(",");
                             var value = [];
-                            this.data.peopleFCF.map((option)=> {
+                            this.data.peopleFCF.map(function(option) {
                                 if (valueList.indexOf(option.text) > -1) {
                                     value.push(option.id);
                                 } 
@@ -370,18 +365,18 @@ steal(
                             
                             document.getElementById("charCountApproval").innerHTML = 240 - document.getElementById("captionTextArea").value.length;
                             
-                            var detailViews = document.querySelectorAll('.dataView').forEach((view) => {
+                            var detailViews = document.querySelectorAll('.dataView').forEach(function(view) {
                                 view.style.display = "none";
                             });
-                            var editViews = document.querySelectorAll('.dataEdit').forEach((view) => {
+                            var editViews = document.querySelectorAll('.dataEdit').forEach(function(view) {
                                 view.style.display = "";
                             });
                             
-                            var approvalButtons = document.querySelectorAll('.hideOnEdit').forEach((button) => {
+                            var approvalButtons = document.querySelectorAll('.hideOnEdit').forEach(function(button) {
                                 button.style.display = "none";
                             });
 
-                            var approvalButtons = document.querySelectorAll('.showOnEdit').forEach((button) => {
+                            var approvalButtons = document.querySelectorAll('.showOnEdit').forEach(function(button) {
                                 button.style.display = "";
                             });
                             
@@ -394,18 +389,18 @@ steal(
                         '.pa-approvalform-cancel click': function ($el, ev) {
                             var _this = this;
                             
-                            var detailViews = document.querySelectorAll('.dataView').forEach((view) => {
+                            var detailViews = document.querySelectorAll('.dataView').forEach(function(view) {
                                 view.style.display = "";
                             });
-                            var editViews = document.querySelectorAll('.dataEdit').forEach((view) => {
+                            var editViews = document.querySelectorAll('.dataEdit').forEach(function(view) {
                                 view.style.display = "none";
                             });
                             
-                            var approvalButtons = document.querySelectorAll('.hideOnEdit').forEach((button) => {
+                            var approvalButtons = document.querySelectorAll('.hideOnEdit').forEach(function(button) {
                                 button.style.display = "";
                             });
 
-                            var approvalButtons = document.querySelectorAll('.showOnEdit').forEach((button) => {
+                            var approvalButtons = document.querySelectorAll('.showOnEdit').forEach(function(button) {
                                 button.style.display = "none";
                             });
                         },
