@@ -8,6 +8,8 @@ steal(
 	function () {
 		System.import('appdev').then(function () {
 			steal.import(
+                'selectivity',
+                'selectivity.css',
 				'appdev/ad',
 				'appdev/control/control',
 				'OpsPortal/classes/OpsTool').then(function () {
@@ -48,6 +50,7 @@ steal(
 							var _this = this;
 							var origList;
 							var teams = [];
+                            var projects = [];
 
 							// now load our data from the server:
 							this.PARequest = AD.Model.get('opstools.ProcessApproval.PARequest');
@@ -62,6 +65,7 @@ steal(
 										// var teams = [];
 										$.each(data.data, function(index, value) {
 											teams.push(value.IDMinistry);
+                                            projects.push(value.ProjectOwner);
 										});
 										if (teams.length > 0) {
 											var myItems = [];
@@ -82,6 +86,65 @@ steal(
 											_this.controllers.ApprovalWorkspace.setList(newList);
 											_this.data.list = newList;
 										}
+                                        
+                                        if (projects.length > 0) {
+                                            var myProject = [];
+
+                                            // request the people associated with this team:
+                                            AD.comm.service.get({ url: '/fcf_activities/teammembers', params: { projectIDs: projects } })
+                                                .fail(function(err) {
+                                                    console.error('problem looking up teammembers');
+                                                    next(err);
+                                                })
+                                                .then(function(res) {
+                                                    var list = res.data || res;
+
+                                                    // update our list of teammates to this set of people
+                                                    _this.listTeammates = new can.List(list);
+
+                                                    //// Update the Tag Selector
+
+                                                    // convert returned list into [ {id:IDPerson, text:'PersonName'}]
+                                                    list.forEach(function(person) {
+
+                                                        myProject.push({
+                                                            id: person.IDPerson,
+                                                            text: person.display_name,
+                                                            avatar: person.avatar
+                                                        });
+                                                    })
+                                                    _this.controllers.ApprovalWorkspace.setPeopleProject(myProject);
+                                                })
+
+                                            var fcfPeople = [];
+
+                                            // request the people associated with this team:
+                                            AD.comm.service.get({ url: '/fcf_activities/teammembers', params: { teamID: 0 } })
+                                                .fail(function(err) {
+                                                    console.error('problem looking up teammembers');
+                                                    next(err);
+                                                })
+                                                .then(function(res) {
+                                                    var list = res.data || res;
+
+                                                    // update our list of teammates to this set of people
+                                                    _this.listTeammates = new can.List(list);
+
+                                                    //// Update the Tag Selector
+
+                                                    // convert returned list into [ {id:IDPerson, text:'PersonName'}]
+                                                    list.forEach(function(person) {
+
+                                                        fcfPeople.push({
+                                                            id: person.IDPerson,
+                                                            text: person.display_name,
+                                                            avatar: person.avatar
+                                                        });
+                                                    })
+                                                    _this.controllers.ApprovalWorkspace.setPeopleFCF(fcfPeople);
+                                                })
+
+                                        }
 
 										$.getJSON('/site/user/data?_='+(Math.random() * 1000000000), function(data) {
 											if (data.data.actions.indexOf("adcore.admin") != -1) {

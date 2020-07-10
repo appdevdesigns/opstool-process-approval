@@ -164,6 +164,79 @@ steal(
 
 							this.showDOM('instructions');
 						},
+                        
+                        formValidate: function(values) {
+
+    						var isValid = true;  // so optimistic
+
+    						// image needs to be set:
+    						isValid = isValid && (values.caption != '');
+    						isValid = isValid && (values.caption_govt != '');
+    						isValid = isValid && (values.date != '');
+    						isValid = isValid && (values.caption.length < 240);
+    						isValid = isValid && (values.taggedPeople.length > 0);
+
+    						return isValid;
+    					},
+                        
+                        formErrors: function(values) {
+
+                            var errors = [];
+
+                            if (values.caption == '') {
+                                errors.push('A caption is required.');
+                            }
+
+                            if (values.caption.length > 240) {
+                                errors.push('Caption is too long.');
+                            }
+
+                            if (values.date == '') {
+                                errors.push('A date is required.');
+                            }
+
+                            if (values.caption_govt == '') {
+                                errors.push('A location is required.');
+                            }
+
+                            if (values.taggedPeople.length == 0) {
+                                errors.push('At least one person should be tagged in this photo.');
+                            }
+
+                            return errors;
+                        },
+
+
+
+
+    					/**
+    					 * formValues
+    					 *
+    					 * returns an object hash of the current form values:
+    					 */
+    					formValues: function() {
+
+    						var values = $("#approvalForm").serializeArray();
+    						// console.log('... values:', values);
+    						var valuesObj = {};
+    						values.forEach(function(val) {
+    							valuesObj[val.name] = val.value;
+    						});
+
+
+    						// compile the taggedPeople:
+    						var taggedPeople = [];
+    						var listTags = $('#peopleTags').selectivity('data');
+
+    						// console.log('listTags:', listTags);
+    						listTags.forEach(function(tag) {
+    							taggedPeople.push(tag.id);
+    						})
+
+    						valuesObj.taggedPeople = taggedPeople;
+
+    						return valuesObj;
+    					},
 
 
 						showDOM: function (panel) {
@@ -193,9 +266,83 @@ steal(
 								}
 							})
 						},
-
-
-
+                        
+                        setPeopleProject: function(people) {
+                            this.data.peopleProject = people;
+                        },
+                        
+                        setPeopleFCF: function(people) {
+                            this.data.peopleFCF = people;
+                        },
+                        
+                        /**
+                         * setTeam()
+                         *
+                         * called by the main controller when a team was selected (step 1 in our process)
+                         *
+                         * This routine gathers all the team members for the selected team
+                         *
+                         * @param {Team} a model object representing the selected Team
+                         */
+                        setTeam: function() {
+                            var options = [
+									{
+										id: "MyProject",
+										text: "My Project's Volunteers",
+										submenu: {
+											items: this.data.peopleProject
+										}
+									},
+									{
+										id: "FCFVolunteers",
+										text: "All FCF Volunteers",
+										submenu: {
+											items: this.data.peopleFCF
+										}
+									}
+								];
+                            var valueString = $('#peopleTags').attr('people-list');
+                            var valueList = valueString.split(",");
+                            var value = [];
+                            this.data.peopleFCF.map((option)=> {
+                                if (valueList.indexOf(option.text) > -1) {
+                                    value.push(option.id);
+                                } 
+                            });
+                            var label = 
+                            $('#peopleTags').selectivity({
+                                items: options,
+                                value: value,
+                                multiple: true,
+                                placeholder: "Tag people in photo",
+                                positionDropdown: function(dropdownEl, selectEl) {
+                                    dropdownEl.style.width = selectEl.offsetWidth/2 + "px";
+                                    var topPos = 0;
+                                    var el = selectEl.offsetParent;
+                                    while (el) {
+                                        topPos = topPos + el.offsetTop;
+                                        el = el.offsetParent;
+                                    }
+                                    dropdownEl.style.top = (selectEl.clientHeight + selectEl.offsetTop + topPos - window.scrollY) + "px";
+                                    var contain = document.getElementsByClassName("selectivity-results-container");
+                                    for (var i = 0; i < contain.length; i++) {
+                                        contain[i].style.maxHeight = "22em";
+                                    }
+                                },
+                                templates: {
+                                    resultItem: function(item) {
+                                        var html = '<div class="selectivity-result-item" style="border-bottom: 1px solid #CCC;" data-item-id="' + item.id + '">';
+                                        if (item.avatar) {
+                                            html += '<img style="margin-right: 10px; width:50px; height:50px; object-fit:cover; border-radius:100%;" src="'+item.avatar+'">';
+                                        }
+                                        html += item.text;
+                                        html += '</div>';
+                                        return html;
+                                    }
+                                }
+                            });
+                        },
+                        
 						setTransaction: function (transaction) {
 							var _this = this;
 
@@ -218,7 +365,135 @@ steal(
 							this.showDOM('approvalForm');
 						},
 
+                        '.pa-approvalform-edit click': function ($el, ev) {
+                            var _this = this;
+                            
+                            document.getElementById("charCountApproval").innerHTML = 240 - document.getElementById("captionTextArea").value.length;
+                            
+                            var detailViews = document.querySelectorAll('.dataView').forEach((view) => {
+                                view.style.display = "none";
+                            });
+                            var editViews = document.querySelectorAll('.dataEdit').forEach((view) => {
+                                view.style.display = "";
+                            });
+                            
+                            var approvalButtons = document.querySelectorAll('.hideOnEdit').forEach((button) => {
+                                button.style.display = "none";
+                            });
 
+                            var approvalButtons = document.querySelectorAll('.showOnEdit').forEach((button) => {
+                                button.style.display = "";
+                            });
+                            
+                            var selectivity = document.querySelector('#peopleTags');
+                            
+                            this.setTeam();
+                            
+                        },
+
+                        '.pa-approvalform-cancel click': function ($el, ev) {
+                            var _this = this;
+                            
+                            var detailViews = document.querySelectorAll('.dataView').forEach((view) => {
+                                view.style.display = "";
+                            });
+                            var editViews = document.querySelectorAll('.dataEdit').forEach((view) => {
+                                view.style.display = "none";
+                            });
+                            
+                            var approvalButtons = document.querySelectorAll('.hideOnEdit').forEach((button) => {
+                                button.style.display = "";
+                            });
+
+                            var approvalButtons = document.querySelectorAll('.showOnEdit').forEach((button) => {
+                                button.style.display = "none";
+                            });
+                        },
+
+                        '.pa-approvalform-save click': function ($el, ev) {
+                            var _this = this;
+                            var valuesObj = _this.formValues();
+                            if (this.formValidate(valuesObj)) {
+                                
+                                $el.attr('disabled', true);
+                                var dfd = AD.sal.Deferred();
+                                var ActivityImage = AD.Model.get('opstools.FCFActivities.ActivityImage');
+                                ActivityImage.findAll({ id: valuesObj.id })
+    							.fail(function(err) {
+    								console.error(err);
+    							})
+    							.then(function(image) {
+    								var image = image[0];
+                                    image.attr(valuesObj);
+                                    image.save()
+                                        .fail(function(err) {
+                                            //// TODO: how do we handle Errors?
+
+                                            console.error(err);
+                                            dfd.reject(err);
+                                        })
+                                        .then(function(data) {
+                                            console.log(' ... returnedData:', data);
+                                            
+                                            var status = "approved";
+                							
+                							// NOTE: objectData can be quite large, and in some situations can clog the url parsers
+                							// so we don't send this info back, which is ok, since the server prevents us from updating
+                							// this field anyway.
+                							_this.transaction.attr('objectData', {}); // don't send this back
+                							_this.transaction.attr('status', status);							
+                							// this.transaction.attr('updatedValues', newValues);
+                							_this.transaction.save()
+                								.fail(function (err) {
+                									console.error(err);
+                									// _this.buttons[status].ready();
+                									// _this.buttonsEnable();
+                								})
+                								.then(function (updatedTrans) {
+                									console.log('... transaction saved!');
+                                                    dfd.resolve();
+                								})
+                							ev.preventDefault();
+                                            
+                                        })
+
+    							});
+                            } else {
+                                var errors = this.formErrors(valuesObj);
+
+                                if (errors.length > 0) {
+
+                                    bootbox.dialog({
+                                        message: 'Please fix these problems before trying again:<br>' + errors.join('<br>'),
+                                        title: 'Invalid Form Data',
+                                        buttons: {
+                                            main: {
+                                                label: 'OK',
+                                                className: "btn-primary",
+                                                callback: function() { }
+                                            }
+                                        }
+                                    });
+
+
+                                } else {
+
+                                    bootbox.dialog({
+                                        message: 'something isn\'t right about this form, but I can\'t tell you what. Just make sure everything is properly filled out and try again.',
+                                        title: 'Invalid Form Data',
+                                        buttons: {
+                                            main: {
+                                                label: 'OK',
+                                                className: "btn-primary",
+                                                callback: function() { }
+                                            }
+                                        }
+                                    });
+
+                                }
+
+                            }
+                        },
 
 						'.pa-approvalform-submit click': function ($el, ev) {
 							var _this = this;

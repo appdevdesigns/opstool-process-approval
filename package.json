@@ -1,33 +1,94 @@
 {
-  "name": "opstool-process-approval",
-  "version": "0.0.0",
-  "description": "a cool project",
-  "main": "module.js",
-  "directories": {
-    "test": "test"
+  "_args": [
+    [
+      {
+        "raw": "github:appdevdesigns/opstool-process-approval#develop",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "github:appdevdesigns/opstool-process-approval#develop",
+        "spec": "github:appdevdesigns/opstool-process-approval#develop",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:appdevdesigns/opstool-process-approval.git#develop",
+          "sshUrl": "git+ssh://git@github.com/appdevdesigns/opstool-process-approval.git#develop",
+          "httpsUrl": "git+https://github.com/appdevdesigns/opstool-process-approval.git#develop",
+          "gitUrl": "git://github.com/appdevdesigns/opstool-process-approval.git#develop",
+          "shortcut": "github:appdevdesigns/opstool-process-approval#develop",
+          "directUrl": "https://raw.githubusercontent.com/appdevdesigns/opstool-process-approval/develop/package.json"
+        }
+      },
+      "/data/www/nodejs/live/adroit"
+    ]
+  ],
+  "_from": "appdevdesigns/opstool-process-approval#develop",
+  "_id": "opstool-process-approval@0.0.0",
+  "_inCache": true,
+  "_location": "/opstool-process-approval",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "github:appdevdesigns/opstool-process-approval#develop",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "github:appdevdesigns/opstool-process-approval#develop",
+    "spec": "github:appdevdesigns/opstool-process-approval#develop",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:appdevdesigns/opstool-process-approval.git#develop",
+      "sshUrl": "git+ssh://git@github.com/appdevdesigns/opstool-process-approval.git#develop",
+      "httpsUrl": "git+https://github.com/appdevdesigns/opstool-process-approval.git#develop",
+      "gitUrl": "git://github.com/appdevdesigns/opstool-process-approval.git#develop",
+      "shortcut": "github:appdevdesigns/opstool-process-approval#develop",
+      "directUrl": "https://raw.githubusercontent.com/appdevdesigns/opstool-process-approval/develop/package.json"
+    }
   },
-  "scripts": {
-    "test": "make test",
-    "postinstall": "node setup/setup.js",
-    "postupdate": "node setup/setup.js"
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git://github.com/appdevdesigns/opstool-process-approval.git#e010f49d1fd99f011109a47719820780e65540e2",
+  "_shasum": "6149c6135be27b42febfd26dd0c8fec5acf72ad1",
+  "_shrinkwrap": null,
+  "_spec": "github:appdevdesigns/opstool-process-approval#develop",
+  "_where": "/data/www/nodejs/live/adroit",
+  "author": {
+    "name": "codingMonkey"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/appdevdesigns/opstool-process-approval.git"
-  },
-  "author": "codingMonkey",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/appdevdesigns/opstool-process-approval/issues"
   },
-  "homepage": "https://github.com/appdevdesigns/opstool-process-approval#readme",
   "dependencies": {
-    "ad-utils": "appdevdesigns/ad-utils"
+    "ad-utils": "github:appdevdesigns/ad-utils"
   },
+  "description": "a cool project",
   "devDependencies": {
     "barrels": "^1.5.0",
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
     "supertest": "^1.1.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "gitHead": "e010f49d1fd99f011109a47719820780e65540e2",
+  "homepage": "https://github.com/appdevdesigns/opstool-process-approval#readme",
+  "license": "ISC",
+  "main": "module.js",
+  "name": "opstool-process-approval",
+  "optionalDependencies": {},
+  "readme": "opstool-process-approval ![Build Status](https://travis-ci.org/appdevdesigns/opstool-process-approval.png)  \n================\n\nA new plugin.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/appdevdesigns/opstool-process-approval.git"
+  },
+  "scripts": {
+    "postinstall": "node setup/setup.js",
+    "postupdate": "node setup/setup.js",
+    "test": "make test"
+  },
+  "version": "0.0.0"
 }
