@@ -31,6 +31,7 @@ steal(
 
 							this.data = {};
 							this.data.listTransactions = null;
+                            this.data.setShowAllVolunteers = false;
 							
 							// gather which person the user is & pass off to Controllers
 							AD.comm.service.get({ url: '/fcf_activities/activityreport/whoami' })
@@ -270,6 +271,10 @@ steal(
                             this.data.peopleFCF = people;
                         },
                         
+                        setShowAllVolunteers: function() {
+                            this.data.setShowAllVolunteers = true;
+                        },
+                        
                         /**
                          * setTeam()
                          *
@@ -280,7 +285,9 @@ steal(
                          * @param {Team} a model object representing the selected Team
                          */
                         setTeam: function() {
-                            var options = [
+                            var options = this.data.peopleProject;
+                            if (this.data.setShowAllVolunteers) {
+                                options = [
 									{
 										id: "MyProject",
 										text: "My Project's Volunteers",
@@ -296,6 +303,7 @@ steal(
 										}
 									}
 								];
+                            }
                             var valueString = $('#peopleTags').attr('people-list');
                             var valueList = valueString.split(",");
                             var value = [];

@@ -154,6 +154,7 @@ steal(
 													newList.splice(0,newList.length)
 													var oldList = newList.concat(origList);
 													_this.controllers.PendingTransactions.setList(oldList);
+                                                    _this.controllers.ApprovalWorkspace.setShowAllVolunteers();
 													_this.controllers.ApprovalWorkspace.setList(oldList);
 													_this.data.list = oldList;
 													$("#filterTeamData").css("display", "none");
